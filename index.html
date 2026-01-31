@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f0f0f; color: #eee; font-family: sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3); }
+    </style>
+</head>
+<body class="p-6 min-h-screen flex flex-col items-center">
+    <a href="index.html" class="fixed top-2 left-2 z-50 px-3 py-1 bg-gray-800 text-xs text-gray-400 rounded hover:text-white hover:bg-gray-700">
+    ← Menu
+    </a>
+    <div class="w-full max-w-md mb-8 text-center">
+        <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-2">
+            仪表盘控制台
+        </h1>
+        <p class="text-gray-500 text-sm">Select a dashboard to launch</p>
+    </div>
+
+    <div id="file-list" class="w-full max-w-md space-y-3">
+        <!-- 列表将在这里生成 -->
+        <div class="text-center text-gray-500 animate-pulse">正在扫描仓库文件...</div>
+    </div>
+
+    <script>
+        // 🔴🔴🔴 请修改这里 🔴🔴🔴
+        const GITHUB_USERNAME = 'tiyife'; // 你的 GitHub 用户名
+        const REPO_NAME = 'trading-dashboard';   // 你的仓库名
+        // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
+        async function fetchFiles() {
+            const listContainer = document.getElementById('file-list');
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('GitHub API Limit or Network Error');
+                
+                const data = await response.json();
+                
+                // 筛选 HTML 文件，排除 index.html 自身
+                const htmlFiles = data.filter(file => 
+                    file.name.endsWith('.html') && 
+                    file.name.toLowerCase() !== 'index.html' &&
+                    file.name.toLowerCase() !== 'template.html' &&
+                    file.name !== '404.html'
+                );
+
+                listContainer.innerHTML = ''; // 清空加载提示
+
+                if (htmlFiles.length === 0) {
+                    listContainer.innerHTML = '<div class="text-center text-gray-500">未找到其他 HTML 文件</div>';
+                    return;
+                }
+
+                htmlFiles.forEach(file => {
+                    // 去掉 .html 后缀作为显示名称
+                    const displayName = file.name.replace('.html', '').toUpperCase();
+                    
+                    const card = document.createElement('a');
+                    card.href = file.name;
+                    card.className = 'glass block p-4 rounded-xl transition-all duration-300 flex justify-between items-center group';
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-blue-900/50 flex items-center justify-center text-blue-400">
+                                📊
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-200 group-hover:text-white">${displayName}</div>
+                                <div class="text-xs text-gray-500">HTML Dashboard</div>
+                            </div>
+                        </div>
+                        <div class="text-gray-600 group-hover:text-white transition-colors">→</div>
+                    `;
+                    listContainer.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error(error);
+                listContainer.innerHTML = `
+                    <div class="p-4 border border-red-900 bg-red-900/20 rounded text-red-400 text-sm text-center">
+                        无法获取文件列表。<br>请检查用户名/仓库名配置，<br>或稍后再试 (API 限制)。
+                    </div>
+                `;
+            }
+        }
+
+        fetchFiles();
+    </script>
+</body>
+</html>
