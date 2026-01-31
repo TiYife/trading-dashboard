@@ -16,7 +16,6 @@
     </script>
 </head>
 <body class="p-4 min-h-screen">
-
     <!-- 🔴🔴🔴 数据配置区 (每次只改这里) 🔴🔴🔴 -->
     <script>
         const DASHBOARD_DATA = 
@@ -121,5 +120,13 @@
         }
         render();
     </script>
+    <!-- 🔙 悬浮返回按钮开始 -->
+    <a href="index.html" class="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-full shadow-lg shadow-blue-900/50 transition-all active:scale-95 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="sr-only">Back</span>
+    </a>
+    <!-- 悬浮返回按钮结束 -->
 </body>
 </html>
