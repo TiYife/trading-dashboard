@@ -12,16 +12,55 @@
     </style>
 </head>
 <body class="p-6 min-h-screen flex flex-col items-center">
-    <div class="w-full max-w-md mb-8 text-center">
-        <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-2">
-            仪表盘控制台
+    <div class="w-full max-w-7xl mb-8 text-center">
+        <h1 class="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-emerald-400 mb-2">
+            交易指挥中心
         </h1>
-        <p class="text-gray-500 text-sm">Select a dashboard to launch</p>
+        <p class="text-gray-500 text-sm">Trading Dashboard Command Center</p>
     </div>
 
-    <div id="file-list" class="w-full max-w-md space-y-3">
-        <!-- 列表将在这里生成 -->
-        <div class="text-center text-gray-500 animate-pulse">正在扫描仓库文件...</div>
+    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 行情追踪 -->
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-2 border-b border-blue-900/30 pb-2">
+                <h2 class="text-lg font-bold text-blue-400 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-blue-900/30 flex items-center justify-center text-sm">📈</span> 
+                    行情追踪
+                </h2>
+                <span id="count-market" class="text-xs text-gray-600 font-mono">0</span>
+            </div>
+            <div id="list-market" class="space-y-3 min-h-[100px]">
+                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
+            </div>
+        </div>
+
+        <!-- 操作计划 -->
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-2 border-b border-purple-900/30 pb-2">
+                <h2 class="text-lg font-bold text-purple-400 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center text-sm">🎯</span> 
+                    操作计划
+                </h2>
+                <span id="count-plan" class="text-xs text-gray-600 font-mono">0</span>
+            </div>
+            <div id="list-plan" class="space-y-3 min-h-[100px]">
+                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
+            </div>
+        </div>
+
+        <!-- 心法 -->
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-2 border-b border-emerald-900/30 pb-2">
+                <h2 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center text-sm">🧘</span> 
+                    心法
+                </h2>
+                <span id="count-mind" class="text-xs text-gray-600 font-mono">0</span>
+            </div>
+            <div id="list-mind" class="space-y-3 min-h-[100px]">
+                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -30,64 +69,104 @@
         const REPO_NAME = 'trading-dashboard';   // 你的仓库名
         // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 
-        async function fetchFiles() {
-            const listContainer = document.getElementById('file-list');
-            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/`;
+        const CATEGORIES = {
+            market: {
+                id: 'list-market',
+                countId: 'count-market',
+                dir: '行情追踪',
+                icon: '📊',
+                color: 'blue'
+            },
+            plan: {
+                id: 'list-plan',
+                countId: 'count-plan',
+                dir: '操作计划',
+                icon: '📝',
+                color: 'purple'
+            },
+            mind: {
+                id: 'list-mind',
+                countId: 'count-mind',
+                dir: '心法',
+                icon: '🧠',
+                color: 'emerald'
+            }
+        };
+
+        async function fetchDirFiles(catKey) {
+            const cat = CATEGORIES[catKey];
+            const container = document.getElementById(cat.id);
+            const countEl = document.getElementById(cat.countId);
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${encodeURIComponent(cat.dir)}`;
 
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('GitHub API Limit or Network Error');
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        container.innerHTML = '<div class="text-center py-8 text-gray-600 text-xs italic border border-dashed border-gray-800 rounded-xl">目录不存在</div>';
+                        return 0;
+                    }
+                    throw new Error('API Error');
+                }
                 
                 const data = await response.json();
+                const htmlFiles = data.filter(file => file.name.endsWith('.html'));
+
+                container.innerHTML = '';
                 
-                // 筛选 HTML 文件，排除 index.html 自身
-                const htmlFiles = data.filter(file => 
-                    file.name.endsWith('.html') && 
-                    file.name.toLowerCase() !== 'index.html' &&
-                    file.name.toLowerCase() !== 'template.html' &&
-                    file.name !== '404.html'
-                );
-
-                listContainer.innerHTML = ''; // 清空加载提示
-
                 if (htmlFiles.length === 0) {
-                    listContainer.innerHTML = '<div class="text-center text-gray-500">未找到其他 HTML 文件</div>';
-                    return;
+                    container.innerHTML = '<div class="text-center py-8 text-gray-600 text-xs italic border border-dashed border-gray-800 rounded-xl">暂无文件</div>';
+                    return 0;
                 }
 
                 htmlFiles.forEach(file => {
-                    // 去掉 .html 后缀作为显示名称
                     const displayName = file.name.replace('.html', '').toUpperCase();
-                    
                     const card = document.createElement('a');
-                    card.href = file.name;
-                    card.className = 'glass block p-4 rounded-xl transition-all duration-300 flex justify-between items-center group';
+                    card.href = file.path; // GitHub API returns 'path' which includes the directory
+                    card.className = 'glass block p-4 rounded-xl transition-all duration-300 flex justify-between items-center group hover:translate-x-1';
+                    
+                    const iconBg = {
+                        blue: 'bg-blue-900/30 text-blue-400',
+                        purple: 'bg-purple-900/30 text-purple-400',
+                        emerald: 'bg-emerald-900/30 text-emerald-400'
+                    }[cat.color];
+
                     card.innerHTML = `
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-blue-900/50 flex items-center justify-center text-blue-400">
-                                📊
+                            <div class="w-10 h-10 rounded-lg ${iconBg} flex items-center justify-center text-lg">
+                                ${cat.icon}
                             </div>
                             <div>
-                                <div class="font-bold text-gray-200 group-hover:text-white">${displayName}</div>
-                                <div class="text-xs text-gray-500">HTML Dashboard</div>
+                                <div class="font-bold text-gray-200 group-hover:text-white transition-colors">${displayName}</div>
+                                <div class="text-[10px] text-gray-500 uppercase tracking-widest">${cat.dir}</div>
                             </div>
                         </div>
-                        <div class="text-gray-600 group-hover:text-white transition-colors">→</div>
+                        <div class="text-gray-700 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </div>
                     `;
-                    listContainer.appendChild(card);
+                    container.appendChild(card);
                 });
+
+                countEl.textContent = htmlFiles.length;
+                return htmlFiles.length;
 
             } catch (error) {
                 console.error(error);
-                listContainer.innerHTML = `
-                    <div class="p-4 border border-red-900 bg-red-900/20 rounded text-red-400 text-sm text-center">
-                        无法获取文件列表。<br>请检查用户名/仓库名配置，<br>或稍后再试 (API 限制)。
-                    </div>
-                `;
+                container.innerHTML = `<div class="p-4 border border-red-900/30 bg-red-900/10 rounded-xl text-red-400/70 text-[10px] text-center">ERR: ${cat.dir} 加载失败</div>`;
+                return 0;
             }
         }
 
-        fetchFiles();
+        async function fetchAll() {
+            await Promise.all([
+                fetchDirFiles('market'),
+                fetchDirFiles('plan'),
+                fetchDirFiles('mind')
+            ]);
+        }
+
+        fetchAll();
     </script>
 </body>
 </html>
