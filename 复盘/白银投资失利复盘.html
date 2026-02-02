@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>白银投资失利深度复盘 - 交易心法</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { background-color: #0f1115; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3); }
+        .md-content ul { list-style-type: disc; padding-left: 1.2em; margin-bottom: 0.5em; }
+        .md-content p { margin-bottom: 0.5em; }
+        .md-content strong { color: #fff; font-weight: 600; }
+        .masonry-grid { column-count: 1; column-gap: 1rem; }
+        @media (min-width: 768px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1024px) { .masonry-grid { column-count: 3; } }
+        .break-inside-avoid { break-inside: avoid; page-break-inside: avoid; }
+    </style>
+</head>
+<body class="p-4 min-h-screen selection:bg-blue-500 selection:text-white">
+
+    <script>
+        // 🔴🔴🔴 请修改这里 🔴🔴🔴
+        const GITHUB_USERNAME = 'tiyife'; // 你的 GitHub 用户名
+        const REPO_NAME = 'trading-dashboard';   // 你的仓库名
+        // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+
+        const DASHBOARD_DATA = {
+            "title": "📉 白银投资失利深度复盘",
+            "lastUpdated": "2026-02-02",
+            "layout": "masonry",
+            "cards": [
+                {
+                    "type": "text",
+                    "theme": "purple",
+                    "title": "第一层：思想重塑（道）",
+                    "subtitle": "身份转变与敬畏心",
+                    "content": "### 1. 从“收藏家”转变为“狩猎者”\n- **思维扭转**：彻底摒弃白银交易中的“价值投资”幻觉。白银是时间的敌人。\n- **行动心法**：开仓前默念“我是在投机”。一旦势头不对，立刻扔掉，不谈感情。\n\n### 2. 建立极度敬畏\n- **思维扭转**：承认自己是市场的弱者。过去盈利是运气，暴跌才是真实面目。\n- **行动心法**：永远假设下一秒发生黑天鹅。下单前先问：“如果闪崩30%，我会死吗？”",
+                    "footer": "生存高于盈利"
+                },
+                {
+                    "type": "text",
+                    "theme": "blue",
+                    "title": "第二层：认知升级（法）",
+                    "subtitle": "精力管理与逻辑推演",
+                    "content": "### 3. 实施“战略性减法”\n- **认知升级**：承认全职工作的精力上限。斩断美债期权战线。\n- **行动方案**：聚焦“港股+白银”。画不出支撑压力位，绝不扩大战场。\n\n### 4. 深化信息处理\n- **认知升级**：大佬研报是“逻辑展示”而非“喊单”。\n- **行动方案**：建立**逻辑闭环笔记**：\n  1. **驱动因子**（为什么涨？）\n  2. **失效阈值**（逻辑何时崩塌？）\n  3. **应对预案**（跑得快）",
+                    "footer": "逻辑闭环才入场"
+                },
+                {
+                    "type": "text",
+                    "theme": "red",
+                    "title": "第三层：纪律固化（术）",
+                    "subtitle": "波动率过滤与熔断机制",
+                    "content": "### 5. 确立“波动率过滤器”\n- **纪律升级**：针对盲目抄底设立硬门槛。\n- **行动规则**：执行**低波入场**原则。高波状态（跌幅>5%或VIX飙升）禁止买入。宁可错过，不接飞刀。\n\n### 6. 固化“熔断机制”\n- **纪律升级**：用制度对抗人性。承认极端行情下大脑会瘫痪。\n- **行动规则**：\n  - **账户级熔断**：总回撤10%为红线。\n  - **工具替代**：必须使用**云端条件单**。不给自己“再看一眼”的机会。",
+                    "footer": "制度对抗人性"
+                },
+                {
+                    "type": "text",
+                    "theme": "green",
+                    "title": "第四层：执行落地（器）",
+                    "subtitle": "补齐技术短板",
+                    "content": "### 7. 技术定向补强\n- **执行升级**：把图表当做“作战地图”。\n- **行动方案**：\n  - 重点攻克：**布林带**、**均线乖离**、**关键支撑互换**。\n  - **复盘要求**：周末必须重画洪灏的图，标出暗示的风险点。看不懂“悬崖”在哪里，绝不下单。",
+                    "footer": "看不懂图，绝不下单"
+                },
+                {
+                    "type": "list",
+                    "theme": "gold",
+                    "title": "核心心法总结",
+                    "subtitle": "四个维度的进化",
+                    "items": [
+                        { "label": "道", "value": "我是狩猎者，生存第一", "color": "purple", "highlight": true },
+                        { "label": "法", "value": "战略减法，逻辑闭环", "color": "blue" },
+                        { "label": "术", "value": "低波入场，云端熔断", "color": "red" },
+                        { "label": "器", "value": "作战地图，定向补强", "color": "green" }
+                    ],
+                    "footer": "从亏损中进化"
+                }
+            ]
+        };
+    </script>
+
+    <div id="app" class="max-w-7xl mx-auto"></div>
+
+    <script>
+        function render() {
+            const d = DASHBOARD_DATA;
+            const app = document.getElementById('app');
+            
+            let html = `<div class="mb-8 border-b border-gray-800 pb-4 flex justify-between items-end">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-white">${d.title}</h1>
+                    <p class="text-gray-500 text-sm mt-1 font-mono">UPDATED: ${d.lastUpdated}</p>
+                </div>
+                <div class="text-xs text-gray-600 font-mono">RETROSPECTIVE V1.0</div>
+            </div>`;
+            
+            html += `<div class="masonry-grid">`;
+
+            d.cards.forEach(c => {
+                const themeMap = {
+                    blue:   { border: 'border-blue-500', bg: 'bg-blue-500/10', text: 'text-blue-400', title: 'text-blue-300' },
+                    red:    { border: 'border-red-500',  bg: 'bg-red-500/10',  text: 'text-red-400',  title: 'text-red-300' },
+                    green:  { border: 'border-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-400', title: 'text-emerald-300' },
+                    gold:   { border: 'border-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-400', title: 'text-amber-300' },
+                    purple: { border: 'border-purple-500', bg: 'bg-purple-500/10', text: 'text-purple-400', title: 'text-purple-300' },
+                    gray:   { border: 'border-gray-600',   bg: 'bg-gray-800',      text: 'text-gray-400',   title: 'text-gray-400' }
+                };
+                const t = themeMap[c.theme] || themeMap.gray;
+
+                html += `<div class="mb-4 break-inside-avoid rounded-xl border border-gray-800 bg-[#16181c] card-shadow overflow-hidden group hover:border-gray-700 transition-colors">
+                    <div class="px-5 py-3 border-b border-gray-800/50 flex justify-between items-center ${t.bg}">
+                        <div>
+                            <div class="text-[10px] font-bold tracking-wider uppercase ${t.title} opacity-80">${c.title}</div>
+                            <div class="text-lg font-bold text-white leading-tight">${c.subtitle}</div>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        ${c.items ? `<div class="space-y-3">
+                            ${c.items.map(i => `
+                                <div class="text-sm ${i.highlight ? 'bg-white/5 -mx-2 px-2 py-1.5 rounded border-l-2 ' + t.border : ''}">
+                                    <div class="text-[10px] text-gray-500 uppercase tracking-wide mb-0.5">${i.label}</div>
+                                    <div class="${i.color === 'red' ? 'text-red-400' : (i.color === 'green' ? 'text-emerald-400' : (i.color === 'blue' ? 'text-blue-400' : (i.color === 'gold' ? 'text-amber-400' : (i.color === 'purple' ? 'text-purple-400' : 'text-gray-300'))))} font-medium leading-snug">
+                                        ${i.value}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>` : ''}
+                        ${c.content ? `<div class="text-sm text-gray-300 leading-relaxed md-content space-y-2">
+                            ${marked.parse(c.content)}
+                        </div>` : ''}
+                    </div>
+                    ${c.footer ? `<div class="px-5 py-2 bg-black/20 border-t border-gray-800/50 text-[10px] text-gray-600 font-mono text-right">
+                        ${c.footer}
+                    </div>` : ''}
+                </div>`;
+            });
+            
+            app.innerHTML = html + '</div>';
+        }
+        render();
+    </script>
+    <a href="../index.html" class="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-full shadow-lg shadow-blue-900/50 transition-all active:scale-95 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="sr-only">Back</span>
+    </a>
+</body>
+</html>

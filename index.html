@@ -19,7 +19,7 @@
         <p class="text-gray-500 text-sm">Trading Dashboard Command Center</p>
     </div>
 
-    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- 行情追踪 -->
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between px-2 border-b border-blue-900/30 pb-2">
@@ -44,6 +44,20 @@
                 <span id="count-plan" class="text-xs text-gray-600 font-mono">0</span>
             </div>
             <div id="list-plan" class="space-y-3 min-h-[100px]">
+                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
+            </div>
+        </div>
+
+        <!-- 复盘 -->
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-2 border-b border-amber-900/30 pb-2">
+                <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-amber-900/30 flex items-center justify-center text-sm">📉</span> 
+                    复盘
+                </h2>
+                <span id="count-review" class="text-xs text-gray-600 font-mono">0</span>
+            </div>
+            <div id="list-review" class="space-y-3 min-h-[100px]">
                 <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
             </div>
         </div>
@@ -83,6 +97,13 @@
                 dir: '操作计划',
                 icon: '📝',
                 color: 'purple'
+            },
+            review: {
+                id: 'list-review',
+                countId: 'count-review',
+                dir: '复盘',
+                icon: '📉',
+                color: 'gold'
             },
             mind: {
                 id: 'list-mind',
@@ -128,7 +149,8 @@
                     const iconBg = {
                         blue: 'bg-blue-900/30 text-blue-400',
                         purple: 'bg-purple-900/30 text-purple-400',
-                        emerald: 'bg-emerald-900/30 text-emerald-400'
+                        emerald: 'bg-emerald-900/30 text-emerald-400',
+                        gold: 'bg-amber-900/30 text-amber-400'
                     }[cat.color];
 
                     card.innerHTML = `
@@ -162,6 +184,7 @@
             await Promise.all([
                 fetchDirFiles('market'),
                 fetchDirFiles('plan'),
+                fetchDirFiles('review'),
                 fetchDirFiles('mind')
             ]);
         }
