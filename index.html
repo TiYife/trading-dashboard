@@ -131,7 +131,17 @@
                 }
                 
                 const data = await response.json();
-                const htmlFiles = data.filter(file => file.name.endsWith('.html'));
+                let htmlFiles = data.filter(file => file.name.endsWith('.html'));
+                
+                // 1. 过滤掉模版(template)和测试(test)文件
+                htmlFiles = htmlFiles.filter(file => {
+                    const lowerName = file.name.toLowerCase();
+                    return !lowerName.includes('template') && !lowerName.includes('test');
+                });
+
+                // 2. 按文件名降序排列 (日期最新的在最上方)
+                // 假设文件名格式为 "YYYYMMDD_...", 降序排列可使最新日期排在前面
+                htmlFiles.sort((a, b) => b.name.localeCompare(a.name));
 
                 container.innerHTML = '';
                 
