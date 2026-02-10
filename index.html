@@ -118,7 +118,7 @@
             const cat = CATEGORIES[catKey];
             const container = document.getElementById(cat.id);
             const countEl = document.getElementById(cat.countId);
-            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${encodeURIComponent(cat.dir)}`;
+            const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${encodeURIComponent(cat.dir)}?ref=main&t=${Date.now()}`;
 
             try {
                 const response = await fetch(apiUrl);
@@ -139,9 +139,22 @@
                     return !lowerName.includes('template') && !lowerName.includes('test');
                 });
 
-                // 2. 按文件名降序排列 (日期最新的在最上方)
-                // 假设文件名格式为 "YYYYMMDD_...", 降序排列可使最新日期排在前面
-                htmlFiles.sort((a, b) => b.name.localeCompare(a.name));
+                // 2. 按日期降序排列
+                htmlFiles.sort((a, b) => {
+                    // 提取日期 (YYYYMMDD)
+                    const dateA = (a.name.match(/^(\d{8})/) || [''])[0];
+                    const dateB = (b.name.match(/^(\d{8})/) || [''])[0];
+
+                    if (dateA && dateB) {
+                        return dateB.localeCompare(dateA); // 都有日期，按日期降序
+                    } else if (dateA) {
+                        return -1; // A有日期，A排前面
+                    } else if (dateB) {
+                        return 1; // B有日期，B排前面
+                    } else {
+                        return a.name.localeCompare(b.name); // 都没有日期，按名称升序(默认)
+                    }
+                });
 
                 container.innerHTML = '';
                 
