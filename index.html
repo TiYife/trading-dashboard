@@ -19,27 +19,13 @@
         <p class="text-gray-500 text-sm">Trading Dashboard Command Center</p>
     </div>
 
-    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- 行情追踪 -->
-        <div class="flex flex-col gap-4">
-            <div class="flex items-center justify-between px-2 border-b border-blue-900/30 pb-2">
-                <h2 class="text-lg font-bold text-blue-400 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-blue-900/30 flex items-center justify-center text-sm">📈</span> 
-                    行情追踪
-                </h2>
-                <span id="count-market" class="text-xs text-gray-600 font-mono">0</span>
-            </div>
-            <div id="list-market" class="space-y-3 min-h-[100px]">
-                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
-            </div>
-        </div>
-
-        <!-- 操作计划 -->
+    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 交易计划 -->
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between px-2 border-b border-purple-900/30 pb-2">
                 <h2 class="text-lg font-bold text-purple-400 flex items-center gap-2">
                     <span class="w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center text-sm">🎯</span> 
-                    操作计划
+                    交易计划
                 </h2>
                 <span id="count-plan" class="text-xs text-gray-600 font-mono">0</span>
             </div>
@@ -84,17 +70,10 @@
         // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
 
         const CATEGORIES = {
-            market: {
-                id: 'list-market',
-                countId: 'count-market',
-                dir: '行情追踪',
-                icon: '📊',
-                color: 'blue'
-            },
             plan: {
                 id: 'list-plan',
                 countId: 'count-plan',
-                dir: '操作计划',
+                dir: '交易计划',
                 icon: '📝',
                 color: 'purple'
             },
@@ -205,7 +184,6 @@
 
         async function fetchAll() {
             await Promise.all([
-                fetchDirFiles('market'),
                 fetchDirFiles('plan'),
                 fetchDirFiles('review'),
                 fetchDirFiles('mind')
