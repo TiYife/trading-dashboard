@@ -19,9 +19,7 @@
         <p class="text-gray-500 text-sm">Trading Dashboard Command Center</p>
     </div>
 
-    <!-- 核心交易体系入口卡片 -->
     <a href="system.html" class="w-full max-w-7xl mb-12 glass rounded-2xl p-8 border border-white/10 shadow-2xl block hover:bg-white/5 transition-all group relative overflow-hidden">
-        <!-- 背景装饰 -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none"></div>
 
@@ -29,7 +27,7 @@
             <h2 class="text-3xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600 group-hover:scale-105 transition-transform duration-300">
                 🌍 全球宏观价值投资体系（终极完整版）
             </h2>
-            
+
             <div class="text-xl md:text-2xl font-mono text-blue-300 mb-6 font-bold text-center">
                 利润 = 信用扩张 <span class="text-yellow-400">×</span> (低估资产 + 催化剂) <span class="text-yellow-400">×</span> 趋势共振
             </div>
@@ -43,12 +41,11 @@
         </div>
     </a>
 
-    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- 交易计划 -->
+    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between px-2 border-b border-purple-900/30 pb-2">
                 <h2 class="text-lg font-bold text-purple-400 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center text-sm">🎯</span> 
+                    <span class="w-8 h-8 rounded-lg bg-purple-900/30 flex items-center justify-center text-sm">🎯</span>
                     交易计划
                 </h2>
                 <span id="count-plan" class="text-xs text-gray-600 font-mono">0</span>
@@ -58,11 +55,10 @@
             </div>
         </div>
 
-        <!-- 复盘 -->
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between px-2 border-b border-amber-900/30 pb-2">
                 <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-amber-900/30 flex items-center justify-center text-sm">📉</span> 
+                    <span class="w-8 h-8 rounded-lg bg-amber-900/30 flex items-center justify-center text-sm">📉</span>
                     复盘
                 </h2>
                 <span id="count-review" class="text-xs text-gray-600 font-mono">0</span>
@@ -72,11 +68,10 @@
             </div>
         </div>
 
-        <!-- 心法 -->
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between px-2 border-b border-emerald-900/30 pb-2">
                 <h2 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center text-sm">🧘</span> 
+                    <span class="w-8 h-8 rounded-lg bg-emerald-900/30 flex items-center justify-center text-sm">🧘</span>
                     心法
                 </h2>
                 <span id="count-mind" class="text-xs text-gray-600 font-mono">0</span>
@@ -85,13 +80,24 @@
                 <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
             </div>
         </div>
+
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-2 border-b border-blue-900/30 pb-2">
+                <h2 class="text-lg font-bold text-blue-400 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-blue-900/30 flex items-center justify-center text-sm">🗺️</span>
+                    研究框架
+                </h2>
+                <span id="count-framework" class="text-xs text-gray-600 font-mono">0</span>
+            </div>
+            <div id="list-framework" class="space-y-3 min-h-[100px]">
+                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // 🔴🔴🔴 请修改这里 🔴🔴🔴
-        const GITHUB_USERNAME = 'tiyife'; // 你的 GitHub 用户名
-        const REPO_NAME = 'trading-dashboard';   // 你的仓库名
-        // 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+        const GITHUB_USERNAME = 'tiyife';
+        const REPO_NAME = 'trading-dashboard';
 
         const CATEGORIES = {
             plan: {
@@ -114,6 +120,13 @@
                 dir: '心法',
                 icon: '🧠',
                 color: 'emerald'
+            },
+            framework: {
+                id: 'list-framework',
+                countId: 'count-framework',
+                dir: '研究框架',
+                icon: '🗺️',
+                color: 'blue'
             }
         };
 
@@ -132,35 +145,32 @@
                     }
                     throw new Error('API Error');
                 }
-                
+
                 const data = await response.json();
                 let htmlFiles = data.filter(file => file.name.endsWith('.html'));
-                
-                // 1. 过滤掉模版(template)和测试(test)文件
+
                 htmlFiles = htmlFiles.filter(file => {
                     const lowerName = file.name.toLowerCase();
                     return !lowerName.includes('template') && !lowerName.includes('test');
                 });
 
-                // 2. 按日期降序排列
                 htmlFiles.sort((a, b) => {
-                    // 提取日期 (YYYYMMDD)
                     const dateA = (a.name.match(/^(\d{8})/) || [''])[0];
                     const dateB = (b.name.match(/^(\d{8})/) || [''])[0];
 
                     if (dateA && dateB) {
-                        return dateB.localeCompare(dateA); // 都有日期，按日期降序
+                        return dateB.localeCompare(dateA);
                     } else if (dateA) {
-                        return -1; // A有日期，A排前面
+                        return -1;
                     } else if (dateB) {
-                        return 1; // B有日期，B排前面
+                        return 1;
                     } else {
-                        return a.name.localeCompare(b.name); // 都没有日期，按名称升序(默认)
+                        return a.name.localeCompare(b.name);
                     }
                 });
 
                 container.innerHTML = '';
-                
+
                 if (htmlFiles.length === 0) {
                     container.innerHTML = '<div class="text-center py-8 text-gray-600 text-xs italic border border-dashed border-gray-800 rounded-xl">暂无文件</div>';
                     return 0;
@@ -169,9 +179,9 @@
                 htmlFiles.forEach(file => {
                     const displayName = file.name.replace('.html', '').toUpperCase();
                     const card = document.createElement('a');
-                    card.href = file.path; // GitHub API returns 'path' which includes the directory
+                    card.href = file.path;
                     card.className = 'glass block p-4 rounded-xl transition-all duration-300 flex justify-between items-center group hover:translate-x-1';
-                    
+
                     const iconBg = {
                         blue: 'bg-blue-900/30 text-blue-400',
                         purple: 'bg-purple-900/30 text-purple-400',
@@ -210,7 +220,8 @@
             await Promise.all([
                 fetchDirFiles('plan'),
                 fetchDirFiles('review'),
-                fetchDirFiles('mind')
+                fetchDirFiles('mind'),
+                fetchDirFiles('framework')
             ]);
         }
 
