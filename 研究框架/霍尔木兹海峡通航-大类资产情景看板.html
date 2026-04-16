@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>霍尔木兹海峡通航恢复 · 全球大类资产情景看板</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-glow: rgba(247, 193, 74, 0.18);
+      --panel: rgba(13, 25, 43, 0.82);
+      --panel-strong: rgba(18, 35, 58, 0.96);
+      --line: rgba(148, 163, 184, 0.16);
+      --text: #f3f8ff;
+      --muted: #9cb0ca;
+      --accent: #f6c453;
+      --cyan: #67d7ff;
+      --green: #3fd19b;
+      --red: #ff7c7c;
+      --amber: #ffb85c;
+      --blue: #79b5ff;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, var(--bg-glow), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(103, 215, 255, 0.12), transparent 24%),
+        linear-gradient(180deg, #091321 0%, #050c16 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 196, 83, 0.22);
+      background: rgba(246, 196, 83, 0.08);
+      color: #ffd98b;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      max-width: 880px;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .back-link {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: #d7e6ff;
+      font-size: 14px;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .back-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(121, 181, 255, 0.42);
+      background: rgba(121, 181, 255, 0.08);
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      border-radius: 26px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .hero-main,
+    .hero-side {
+      padding: 24px;
+    }
+
+    .section-kicker {
+      color: #ffd98b;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .core-conclusion {
+      font-size: clamp(1.2rem, 2.8vw, 2rem);
+      line-height: 1.35;
+      margin: 0 0 16px;
+    }
+
+    .lead {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .repricing-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .mini-card {
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    }
+
+    .mini-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .mini-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+
+    .layer-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .layer-card {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
+      position: relative;
+    }
+
+    .layer-card::after {
+      content: "";
+      position: absolute;
+      left: 25px;
+      bottom: -13px;
+      width: 2px;
+      height: 13px;
+      background: linear-gradient(180deg, rgba(246, 196, 83, 0.55), rgba(121, 181, 255, 0.18));
+    }
+
+    .layer-card:last-child::after { display: none; }
+
+    .layer-index {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: rgba(246, 196, 83, 0.12);
+      border: 1px solid rgba(246, 196, 83, 0.2);
+      color: #ffd98b;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .layer-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .layer-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+
+    .alert-box {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 124, 124, 0.18);
+      background: rgba(255, 124, 124, 0.08);
+      color: #ffd4d4;
+      line-height: 1.8;
+    }
+
+    .alert-box strong { color: #ffffff; }
+
+    .section {
+      margin-top: 26px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.55rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .scenario-card {
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+    }
+
+    .scenario-card[data-tone="a"] { border-color: rgba(63, 209, 155, 0.24); }
+    .scenario-card[data-tone="b"] { border-color: rgba(255, 184, 92, 0.24); }
+    .scenario-card[data-tone="c"] { border-color: rgba(255, 124, 124, 0.24); }
+    .scenario-card[data-tone="d"] { border-color: rgba(121, 181, 255, 0.24); }
+
+    .scenario-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .scenario-code {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .scenario-card[data-tone="a"] .scenario-code {
+      background: rgba(63, 209, 155, 0.12);
+      color: #8df0c7;
+      border: 1px solid rgba(63, 209, 155, 0.2);
+    }
+
+    .scenario-card[data-tone="b"] .scenario-code {
+      background: rgba(255, 184, 92, 0.12);
+      color: #ffd08f;
+      border: 1px solid rgba(255, 184, 92, 0.2);
+    }
+
+    .scenario-card[data-tone="c"] .scenario-code {
+      background: rgba(255, 124, 124, 0.12);
+      color: #ffb2b2;
+      border: 1px solid rgba(255, 124, 124, 0.2);
+    }
+
+    .scenario-card[data-tone="d"] .scenario-code {
+      background: rgba(121, 181, 255, 0.12);
+      color: #b8d6ff;
+      border: 1px solid rgba(121, 181, 255, 0.2);
+    }
+
+    .scenario-card h3 {
+      margin: 0 0 6px;
+      font-size: 1.18rem;
+    }
+
+    .scenario-meta {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.93rem;
+    }
+
+    .scenario-tag {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d8e6ff;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .scenario-mainline {
+      margin: 0 0 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      line-height: 1.75;
+      color: #f7fbff;
+      font-weight: 600;
+    }
+
+    .bullet-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .bullet-list li + li { margin-top: 6px; }
+
+    .matrix-card {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .matrix-wrap {
+      overflow-x: auto;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    table {
+      width: 100%;
+      min-width: 1220px;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      padding: 16px 14px;
+      background: rgba(9, 19, 33, 0.92);
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      text-align: left;
+      vertical-align: bottom;
+    }
+
+    thead th:last-child { border-right: 0; }
+
+    tbody th,
+    tbody td {
+      padding: 16px 14px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    tbody tr:last-child th,
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody td:last-child,
+    tbody th:last-child {
+      border-right: 0;
+    }
+
+    .asset-col {
+      width: 180px;
+      background: rgba(7, 17, 31, 0.92);
+    }
+
+    .asset-name {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .asset-note {
+      display: block;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .scenario-headline {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .scenario-subline {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    .signal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .signal.up {
+      background: rgba(63, 209, 155, 0.12);
+      color: #92f2ca;
+      border: 1px solid rgba(63, 209, 155, 0.22);
+    }
+
+    .signal.down {
+      background: rgba(255, 124, 124, 0.12);
+      color: #ffb6b6;
+      border: 1px solid rgba(255, 124, 124, 0.22);
+    }
+
+    .signal.mixed {
+      background: rgba(255, 184, 92, 0.12);
+      color: #ffd39e;
+      border: 1px solid rgba(255, 184, 92, 0.22);
+    }
+
+    .signal.neutral {
+      background: rgba(121, 181, 255, 0.12);
+      color: #bfd9ff;
+      border: 1px solid rgba(121, 181, 255, 0.22);
+    }
+
+    .cell-title {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    .cell-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .compare-card {
+      padding: 22px;
+    }
+
+    .compare-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    .compare-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .compare-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .compare-tags span {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 12px;
+      color: #d7e6ff;
+    }
+
+    .compare-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .compare-card li + li { margin-top: 6px; }
+
+    .quote-card {
+      margin-top: 16px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(246, 196, 83, 0.2);
+      background: rgba(246, 196, 83, 0.08);
+      color: #fff4d1;
+      font-size: 1rem;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: #7f91aa;
+      font-size: 0.84rem;
+      text-align: right;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .scenario-grid,
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .repricing-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 24px, 100%); }
+
+      .topbar,
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-main,
+      .hero-side,
+      .scenario-card,
+      .compare-card,
+      .matrix-card {
+        padding: 18px;
+      }
+
+      .layer-card {
+        grid-template-columns: 46px minmax(0, 1fr);
+      }
+
+      .layer-index {
+        width: 46px;
+        height: 46px;
+      }
+
+      table { min-width: 1040px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div>
+        <span class="eyebrow">🟡 Scenario Dashboard</span>
+        <h1>霍尔木兹海峡通航恢复 · 全球大类资产情景看板</h1>
+        <p class="subtitle">核心不是“通了没”，而是通了以后，链条到底恢复了几成。真正决定全球资产分化的，不是单一 headline，而是物理通行、商业承运、终端供给三层修复分别恢复到了哪一层。</p>
+      </div>
+      <a class="back-link" href="../index.html" aria-label="返回首页">← 返回首页</a>
+    </div>
+
+    <div class="hero">
+      <section class="panel hero-main">
+        <div class="section-kicker">核心判断</div>
+        <p class="core-conclusion">市场会沿着同一条链路，完成三次不同强度的定价：先缓和 headline，再回吐风险溢价，最后才进入完整 risk-on。</p>
+        <p class="lead">如果只修到第一层，资产只会出现新闻面反弹；修到第二层，原油的纯地缘溢价开始回落，但摩擦成本仍压着通胀和增长；只有第三层也修复，全球供需才算真正恢复，成长股、铜和全球权益才会进入完整修复阶段。</p>
+
+        <div class="repricing-strip">
+          <div class="mini-card">
+            <div class="mini-label">只修第一层</div>
+            <div class="mini-title">Headline 缓和</div>
+            <p>航道看起来能走，但资产不会全面修复，更多是新闻驱动的交易回补。</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">修到第二层</div>
+            <div class="mini-title">风险溢价回吐</div>
+            <p>封锁溢价下降，但保险、运费、船东意愿和摩擦成本还在，通胀黏性未退。</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-label">修到第三层</div>
+            <div class="mini-title">完整 Risk-On</div>
+            <p>原油和成品油真正到终端，供需链恢复，才会形成完整的去地缘溢价与久期修复。</p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel hero-side">
+        <div class="section-kicker">三层恢复链条</div>
+        <div class="layer-stack">
+          <div class="layer-card">
+            <div class="layer-index">01</div>
+            <div>
+              <h3>物理上能不能走</h3>
+              <p>看的是航道是否具备基础通行能力，军事风险、航安风险和名义通航状态是否解除。</p>
+            </div>
+          </div>
+          <div class="layer-card">
+            <div class="layer-index">02</div>
+            <div>
+              <h3>商业上敢不敢运</h3>
+              <p>看的是船东接不接、保险贵不贵、贸易商是否愿意恢复常态化承运与交易。</p>
+            </div>
+          </div>
+          <div class="layer-card">
+            <div class="layer-index">03</div>
+            <div>
+              <h3>终端供给能不能到</h3>
+              <p>看的是原油、成品油、炼化、配送和库存修复是否真的传导到终端消费与工业体系。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="alert-box">
+          <strong>最容易犯的错：</strong>把“能走”误判成“能运”，再把“能运”误判成“能到终端”。这三个层次每跨一层，全球资产的定价逻辑都会变。
+        </div>
+      </aside>
+    </div>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">A / B / C / D 情景卡</h2>
+          <p class="section-desc">卡片负责给出每个场景的交易主线，真正方便速查的信号集中在下面的热力矩阵表。</p>
+        </div>
+      </div>
+
+      <div class="scenario-grid">
+        <article class="scenario-card" data-tone="a">
+          <div class="scenario-head">
+            <div>
+              <div class="scenario-code">A</div>
+              <h3>全面缓解</h3>
+              <p class="scenario-meta">物理通行恢复 + 商业恢复 + 终端供给恢复</p>
+            </div>
+            <span class="scenario-tag">完整修复</span>
+          </div>
+          <p class="scenario-mainline">交易主线：去地缘溢价、去通胀尾部风险、回到完整 risk-on。</p>
+          <ul class="bullet-list">
+            <li>原油从持续性供给风险降级为一次性事件，价格中枢回落。</li>
+            <li>铜、成长股、AI 链和全球权益最受益，尤其能源进口国和亚洲、欧洲市场。</li>
+            <li>黄金、美元、航运与油运费率失去主要支撑，美债得到温和修复。</li>
+          </ul>
+        </article>
+
+        <article class="scenario-card" data-tone="b">
+          <div class="scenario-head">
+            <div>
+              <div class="scenario-code">B</div>
+              <h3>表面缓解，现实未修</h3>
+              <p class="scenario-meta">物理上可走，但商业和终端未完全恢复</p>
+            </div>
+            <span class="scenario-tag">伪缓和</span>
+          </div>
+          <p class="scenario-mainline">交易主线：headline 缓和，但现实供给摩擦仍在；不是 risk-on，而是“伪缓和 + 再通胀黏性”。</p>
+          <ul class="bullet-list">
+            <li>原油跌不下去，因为封锁溢价虽然回落，但摩擦成本溢价还在。</li>
+            <li>成长股和 AI 链先反弹，随后再被高油价和通胀黏性压制。</li>
+            <li>黄金偏强、白银弱于黄金，全球权益只能分化修复，不是全面牛市。</li>
+          </ul>
+        </article>
+
+        <article class="scenario-card" data-tone="c">
+          <div class="scenario-head">
+            <div>
+              <div class="scenario-code">C</div>
+              <h3>现实冲击升级</h3>
+              <p class="scenario-meta">物理受阻或持续恶化，商业与终端同步收紧</p>
+            </div>
+            <span class="scenario-tag">系统性风险</span>
+          </div>
+          <p class="scenario-mainline">交易主线：滞胀冲击升级 + 全球避险 + 增长下修。</p>
+          <ul class="bullet-list">
+            <li>原油、黄金、美元、航运与油运费率受益最大，近月与现货端最敏感。</li>
+            <li>铜、成长股、AI 链和全球权益明显承压，能源进口地区更脆弱。</li>
+            <li>美债先交易衰退，随后再面对通胀担忧，比特币大概率先被当高波动风险资产卖掉。</li>
+          </ul>
+        </article>
+
+        <article class="scenario-card" data-tone="d">
+          <div class="scenario-head">
+            <div>
+              <div class="scenario-code">D</div>
+              <h3>中度再通胀</h3>
+              <p class="scenario-meta">物理可走，商业大体恢复，但终端修复慢</p>
+            </div>
+            <span class="scenario-tag">终端滞后</span>
+          </div>
+          <p class="scenario-mainline">交易主线：原油 headline 缓和了，但终端通胀压力还没退，成品油和裂解价差往往比原油更强。</p>
+          <ul class="bullet-list">
+            <li>原油回落但不深，炼化、配送和库存修复慢，价格压力延迟释放。</li>
+            <li>成长股比 B 情景更好，但明显不如 A，全球权益恢复但不流畅。</li>
+            <li>美元略强，美债受增长放缓与通胀滞后双向拉扯，铜只是弱复苏。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">资产热力矩阵</h2>
+          <p class="section-desc">这个表格是速查核心。先定场景，再看每个资产的方向和背后主因。</p>
+        </div>
+      </div>
+
+      <div class="panel matrix-card">
+        <div class="matrix-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="asset-col">
+                  <strong class="scenario-headline">资产</strong>
+                  <span class="scenario-subline">方向判断 + 驱动解释</span>
+                </th>
+                <th>
+                  <strong class="scenario-headline">A 全面缓解</strong>
+                  <span class="scenario-subline">物理、商业、终端三层都恢复</span>
+                </th>
+                <th>
+                  <strong class="scenario-headline">B 伪缓和</strong>
+                  <span class="scenario-subline">能走，但承运和终端效率仍低</span>
+                </th>
+                <th>
+                  <strong class="scenario-headline">C 冲击升级</strong>
+                  <span class="scenario-subline">航道受阻，供给冲击升级</span>
+                </th>
+                <th>
+                  <strong class="scenario-headline">D 中度再通胀</strong>
+                  <span class="scenario-subline">商业大体恢复，终端传导偏慢</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">原油</strong>
+                  <span class="asset-note">最直接交易供给冲击与风险溢价</span>
+                </th>
+                <td>
+                  <span class="signal down">利空</span>
+                  <strong class="cell-title">明显利空</strong>
+                  <p class="cell-text">地缘风险溢价被系统性挤出，价格中枢回落。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">高位震荡</span>
+                  <strong class="cell-title">跌不下去</strong>
+                  <p class="cell-text">封锁溢价下降，但摩擦成本溢价仍在。</p>
+                </td>
+                <td>
+                  <span class="signal up">强利多</span>
+                  <strong class="cell-title">最直接受益</strong>
+                  <p class="cell-text">真实供给冲击抬升近月和现货端敏感度。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">回落有限</span>
+                  <strong class="cell-title">回落但不深</strong>
+                  <p class="cell-text">headline 缓和，但终端压力滞后释放。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">成品油 / 裂解价差</strong>
+                  <span class="asset-note">反映终端供给与炼化、配送效率</span>
+                </th>
+                <td>
+                  <span class="signal down">偏弱</span>
+                  <strong class="cell-title">同步缓和</strong>
+                  <p class="cell-text">终端供给恢复，裂解价差与配送压力回落。</p>
+                </td>
+                <td>
+                  <span class="signal up">偏强</span>
+                  <strong class="cell-title">终端未修复</strong>
+                  <p class="cell-text">炼厂补库与终端配送效率低，成品端压力更顽固。</p>
+                </td>
+                <td>
+                  <span class="signal up">强利多</span>
+                  <strong class="cell-title">供给冲击直达终端</strong>
+                  <p class="cell-text">原油和成品油都受阻，终端价格压力放大。</p>
+                </td>
+                <td>
+                  <span class="signal up">强于原油</span>
+                  <strong class="cell-title">D 情景关键观察</strong>
+                  <p class="cell-text">原油回落后，裂解价差仍可能更强。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">黄金</strong>
+                  <span class="asset-note">交易地缘避险、通胀对冲、实际利率</span>
+                </th>
+                <td>
+                  <span class="signal down">偏利空</span>
+                  <strong class="cell-title">失去部分支撑</strong>
+                  <p class="cell-text">避险需求下降，通胀尾部风险缓解。</p>
+                </td>
+                <td>
+                  <span class="signal up">偏强</span>
+                  <strong class="cell-title">现实链条没修</strong>
+                  <p class="cell-text">通胀压力未真正解除，黄金仍有支撑。</p>
+                </td>
+                <td>
+                  <span class="signal up">强利多</span>
+                  <strong class="cell-title">三重支撑</strong>
+                  <p class="cell-text">地缘避险、通胀对冲、风险资产去杠杆共振。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">中性偏强</span>
+                  <strong class="cell-title">滞后通胀支撑</strong>
+                  <p class="cell-text">终端价格压力未退，黄金维持韧性。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">白银</strong>
+                  <span class="asset-note">贵金属属性 + 工业金属属性</span>
+                </th>
+                <td>
+                  <span class="signal up">相对更强</span>
+                  <strong class="cell-title">通常强于黄金</strong>
+                  <p class="cell-text">风险偏好和工业预期同步修复。</p>
+                </td>
+                <td>
+                  <span class="signal down">弱于黄金</span>
+                  <strong class="cell-title">工业属性拖累</strong>
+                  <p class="cell-text">增长没真修复，白银不如黄金稳。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">会涨但偏弱</span>
+                  <strong class="cell-title">弱于黄金</strong>
+                  <p class="cell-text">衰退与滞胀压制工业属性，即使上涨也更吃力。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">弹性有限</span>
+                  <strong class="cell-title">不如黄金稳</strong>
+                  <p class="cell-text">终端修复慢，工业需求改善力度不够。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">铜</strong>
+                  <span class="asset-note">交易全球增长与制造业成本压力</span>
+                </th>
+                <td>
+                  <span class="signal up">利多</span>
+                  <strong class="cell-title">增长预期修复</strong>
+                  <p class="cell-text">制造业成本缓解，工业需求预期改善。</p>
+                </td>
+                <td>
+                  <span class="signal down">偏弱</span>
+                  <strong class="cell-title">震荡偏弱</strong>
+                  <p class="cell-text">高能源成本压制制造业与增长预期。</p>
+                </td>
+                <td>
+                  <span class="signal down">利空</span>
+                  <strong class="cell-title">交易增长下修</strong>
+                  <p class="cell-text">全球工业需求与风险偏好一起被压缩。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">弱复苏</span>
+                  <strong class="cell-title">弹性有限</strong>
+                  <p class="cell-text">比 B 好，但远不及 A 的完整修复。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">美股成长 / AI 链</strong>
+                  <span class="asset-note">对油价、通胀预期和久期最敏感</span>
+                </th>
+                <td>
+                  <span class="signal up">明显利多</span>
+                  <strong class="cell-title">估值修复最充分</strong>
+                  <p class="cell-text">油价回落、通胀缓和、久期资产受益。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">先上后压</span>
+                  <strong class="cell-title">先修复，后承压</strong>
+                  <p class="cell-text">headline 反弹之后，高油价和再通胀黏性又压估值。</p>
+                </td>
+                <td>
+                  <span class="signal down">明显承压</span>
+                  <strong class="cell-title">最怕长端利率回升</strong>
+                  <p class="cell-text">油价抬升、通胀回升、久期压力回归。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">有限修复</span>
+                  <strong class="cell-title">比 B 好，但比 A 差</strong>
+                  <p class="cell-text">并非完整 risk-on，估值扩张空间受限。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">全球权益</strong>
+                  <span class="asset-note">看风险偏好是否能从局部回到全面</span>
+                </th>
+                <td>
+                  <span class="signal up">普遍利多</span>
+                  <strong class="cell-title">完整修复</strong>
+                  <p class="cell-text">能源进口国、欧洲、亚洲弹性通常更大。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">分化修复</span>
+                  <strong class="cell-title">不是全面牛市</strong>
+                  <p class="cell-text">防御板块强于高 beta 周期股。</p>
+                </td>
+                <td>
+                  <span class="signal down">普遍承压</span>
+                  <strong class="cell-title">进口地区更脆弱</strong>
+                  <p class="cell-text">欧洲、亚洲和高能耗经济体受到更大挤压。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">修复不流畅</span>
+                  <strong class="cell-title">恢复但不顺滑</strong>
+                  <p class="cell-text">通胀和增长的拉扯使风险偏好恢复有限。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">美元</strong>
+                  <span class="asset-note">风险偏好与全球流动性回流的镜像</span>
+                </th>
+                <td>
+                  <span class="signal down">偏利空</span>
+                  <strong class="cell-title">避险美元回吐</strong>
+                  <p class="cell-text">全球风险偏好恢复，美元安全垫削弱。</p>
+                </td>
+                <td>
+                  <span class="signal up">偏强</span>
+                  <strong class="cell-title">至少不弱</strong>
+                  <p class="cell-text">全球并未进入完整 risk-on，美元难明显走弱。</p>
+                </td>
+                <td>
+                  <span class="signal up">利多</span>
+                  <strong class="cell-title">risk-off 回流</strong>
+                  <p class="cell-text">全球避险与流动性偏好强化美元。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">略强</span>
+                  <strong class="cell-title">中性略偏强</strong>
+                  <p class="cell-text">完整风险释放未发生，美元回落空间受限。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">美债</strong>
+                  <span class="asset-note">增长下修与通胀黏性的平衡点</span>
+                </th>
+                <td>
+                  <span class="signal up">温和利多</span>
+                  <strong class="cell-title">通胀回落利好债</strong>
+                  <p class="cell-text">但 risk-on 会限制涨幅，不会是单边大牛市。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">方向不干净</span>
+                  <strong class="cell-title">多空都在</strong>
+                  <p class="cell-text">增长下修利多债，通胀黏性又限制债牛。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">先利多后分化</span>
+                  <strong class="cell-title">衰退交易先行</strong>
+                  <p class="cell-text">第一阶段看衰退，第二阶段再担心通胀抬头。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">双向拉扯</span>
+                  <strong class="cell-title">不容易走趋势</strong>
+                  <p class="cell-text">增长放缓与通胀滞后同时存在。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">比特币</strong>
+                  <span class="asset-note">更像高弹性风险偏好与流动性代理</span>
+                </th>
+                <td>
+                  <span class="signal up">偏利多</span>
+                  <strong class="cell-title">风险偏好修复</strong>
+                  <p class="cell-text">更像 risk-on 交易，而不是纯避险资产。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">高波动中性</span>
+                  <strong class="cell-title">更依赖流动性</strong>
+                  <p class="cell-text">事件缓和本身不是决定性驱动。</p>
+                </td>
+                <td>
+                  <span class="signal down">先承压</span>
+                  <strong class="cell-title">先被当风险资产卖出</strong>
+                  <p class="cell-text">它不是稳定避险资产，risk-off 初段通常受压。</p>
+                </td>
+                <td>
+                  <span class="signal neutral">中性偏震荡</span>
+                  <strong class="cell-title">弹性受限</strong>
+                  <p class="cell-text">终端通胀未退，流动性改善不够顺畅。</p>
+                </td>
+              </tr>
+              <tr>
+                <th class="asset-col">
+                  <strong class="asset-name">航运 / 油运费率</strong>
+                  <span class="asset-note">最能反映摩擦成本与保费是否正常化</span>
+                </th>
+                <td>
+                  <span class="signal down">利空</span>
+                  <strong class="cell-title">运价回落</strong>
+                  <p class="cell-text">运费与风险溢价同步下行。</p>
+                </td>
+                <td>
+                  <span class="signal up">偏强</span>
+                  <strong class="cell-title">摩擦成本仍高</strong>
+                  <p class="cell-text">船东谨慎、保险偏贵、效率偏低。</p>
+                </td>
+                <td>
+                  <span class="signal up">强利多</span>
+                  <strong class="cell-title">最直接受益</strong>
+                  <p class="cell-text">运价和保费在冲击升级时最容易跳升。</p>
+                </td>
+                <td>
+                  <span class="signal mixed">偏强</span>
+                  <strong class="cell-title">终端修复慢</strong>
+                  <p class="cell-text">运输恢复快于终端吸收，费率不易完全回落。</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">黄金和白银必须拆开看</h2>
+          <p class="section-desc">这两个资产最容易被一起讲，但它们的驱动并不一样。黄金更纯粹交易“怕”，白银同时交易“怕 + 经济行不行”。</p>
+        </div>
+      </div>
+
+      <div class="compare-grid">
+        <article class="panel compare-card">
+          <div class="section-kicker">Gold Lens</div>
+          <h3>黄金</h3>
+          <p>黄金更纯粹地交易地缘避险、通胀对冲、政策可信度和实际利率。只要现实链条没修复，黄金的安全垫就还在。</p>
+          <div class="compare-tags">
+            <span>地缘避险</span>
+            <span>通胀对冲</span>
+            <span>政策可信度</span>
+            <span>实际利率</span>
+          </div>
+          <ul>
+            <li>C 情景最强，因为避险、通胀与去杠杆三条线同时支持它。</li>
+            <li>B 情景也偏强，因为 headline 缓和并不等于现实供给链修复。</li>
+            <li>A 情景会失去一部分支撑，因为市场从防守切回增长与流动性。</li>
+          </ul>
+        </article>
+
+        <article class="panel compare-card">
+          <div class="section-kicker">Silver Lens</div>
+          <h3>白银</h3>
+          <p>白银同时带有贵金属和工业金属属性，所以它并不只是避险品种，工业需求是否真的恢复会决定它相对黄金的强弱。</p>
+          <div class="compare-tags">
+            <span>贵金属属性</span>
+            <span>工业金属属性</span>
+            <span>风险偏好</span>
+            <span>制造业预期</span>
+          </div>
+          <ul>
+            <li>A 情景通常相对黄金更好，因为工业预期和风险偏好都修复。</li>
+            <li>B 情景通常弱于黄金，因为增长没真修，工业属性成为拖累。</li>
+            <li>C 情景也可能上涨，但大概率仍弱于黄金，因为滞胀和衰退不利于工业属性。</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="quote-card">一句话压缩：黄金交易的是“怕”，白银交易的是“怕 + 经济行不行”。</div>
+      <div class="footer-note">Updated 2026-04-16 · Hormuz Strait Scenario Board</div>
+    </section>
+  </div>
+</body>
+</html>
