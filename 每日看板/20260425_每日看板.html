@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日看板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: radial-gradient(circle at top, #111827 0%, #020617 55%, #000 100%); color: #e5eefb; }
+        .glass { background: rgba(15, 23, 42, 0.72); border: 1px solid rgba(148, 163, 184, 0.14); backdrop-filter: blur(12px); }
+        .chip { border: 1px solid rgba(148, 163, 184, 0.2); background: rgba(15, 23, 42, 0.55); }
+    </style>
+</head>
+<body class="min-h-screen px-4 py-8 md:px-8">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6">
+        <header class="glass rounded-3xl p-6 shadow-2xl">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <div class="mb-3 inline-flex items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs text-cyan-200">
+                        每日看板 / Daily Dashboard
+                    </div>
+                    <h1 id="page-title" class="text-3xl font-black tracking-tight text-white md:text-4xl"></h1>
+                    <p id="page-subtitle" class="mt-3 max-w-3xl text-sm leading-7 text-slate-300 md:text-base"></p>
+                </div>
+                <div class="grid grid-cols-1 gap-3 text-sm text-slate-300 md:grid-cols-2">
+                    <div class="glass rounded-2xl px-4 py-3">
+                        <div class="text-[11px] uppercase tracking-[0.18em] text-slate-500">运行日期</div>
+                        <div id="meta-run-date" class="mt-2 font-mono text-slate-100"></div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3">
+                        <div class="text-[11px] uppercase tracking-[0.18em] text-slate-500">生成时间</div>
+                        <div id="meta-generated-at" class="mt-2 font-mono text-slate-100"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="status-banner" class="hidden rounded-2xl border px-5 py-4 text-sm shadow-xl"></section>
+
+        <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.3fr_0.9fr]">
+            <div class="flex flex-col gap-6">
+                <div class="glass rounded-3xl p-6 shadow-2xl">
+                    <div class="mb-4 flex items-center justify-between">
+                        <h2 class="text-xl font-bold text-white">市场总览</h2>
+                        <span id="market-regime" class="chip rounded-full px-3 py-1 text-xs text-slate-200"></span>
+                    </div>
+                    <p id="market-summary" class="leading-8 text-slate-200"></p>
+                </div>
+                <div id="sections-list" class="grid grid-cols-1 gap-6"></div>
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <div class="glass rounded-3xl p-6 shadow-2xl">
+                    <h2 class="text-lg font-bold text-white">关键驱动</h2>
+                    <ul id="key-points" class="mt-4 space-y-3 text-sm leading-7 text-slate-200"></ul>
+                </div>
+                <div class="glass rounded-3xl p-6 shadow-2xl">
+                    <h2 class="text-lg font-bold text-white">风险与观察</h2>
+                    <div class="mt-4 space-y-5">
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-rose-300">风险提示</div>
+                            <ul id="risks" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-amber-300">观察点</div>
+                            <ul id="watch-items" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-3xl p-6 shadow-2xl">
+                    <h2 class="text-lg font-bold text-white">数据口径</h2>
+                    <div class="mt-4 space-y-4">
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-cyan-300">数据源</div>
+                            <div id="sources" class="flex flex-wrap gap-2"></div>
+                        </div>
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-slate-400">限制说明</div>
+                            <ul id="limitations" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-fuchsia-300">异常信号</div>
+                            <ul id="signals" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="missing-panel" class="glass hidden rounded-3xl p-6 shadow-2xl">
+                    <h2 class="text-lg font-bold text-white">缺失项</h2>
+                    <div class="mt-4 space-y-4">
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-orange-300">缺失模块</div>
+                            <div id="missing-modules" class="flex flex-wrap gap-2"></div>
+                        </div>
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-orange-300">缺失明细</div>
+                            <ul id="missing-items" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const DASHBOARD_DATA = {
+  "meta": {
+    "run_id": "20260425-081038",
+    "run_date": "2026-04-25",
+    "generated_at": "2026-04-25T08:10:38+08:00",
+    "publish_status": "degraded",
+    "warnings": [],
+    "missing_modules": [
+      "macro",
+      "fx",
+      "commodities",
+      "china_assets",
+      "rates",
+      "liquidity_risk"
+    ],
+    "operator_notice": "当前页面为降级发布版本，请检查 warnings 与缺失模块。"
+  },
+  "dashboard": {
+    "title": "科技领涨风险修复",
+    "subtitle": "自动生成的每日早盘总览",
+    "summary": "当前市场更像在交易利率回落带来的科技成长修复，SPX/NDX测试1M高点、NVDA大涨，风险偏好明显偏向 AI 主线。由于 VIX、WTI、NDX 存在延迟且缺少宏观事件瞬时反应数据，这一结论更适用于当前早盘快照，暂不能外推成全天单边走势。",
+    "market_regime": "risk_on",
+    "sections": [
+      {
+        "id": "one_line_conclusion",
+        "title": "一句话结论",
+        "content": "当前市场在交易 **利率回落下的科技成长领涨与风险修复**，主导变量是 **美债收益率下行 / AI权重股继续走强**，整体处于 **偏多震荡** 状态。"
+      },
+      {
+        "id": "core_drivers",
+        "title": "1. 核心驱动：金融条件与流动性",
+        "content": "- **利率：** US10Y 4.306%（-1.9bp），US2Y 3.785%（-4.7bp），2Y10Y 利差 52.1bp。  \n  含义：长短端同步回落且短端下行更快，曲线走陡，说明短端政策压制略有缓和，估值端的约束边际减轻；但 FedWatch 显示 4 月 29 日会议 **99.5% 概率不变**，年末仅定价 **6.1bp** 降息，宽松预期仍不强。\n\n- **美元：** DXY 98.51（-0.29%），USDJPY 159.298（-0.27%），USDCNH 6.8326（-0.03%）。  \n  含义：美元日内回落，非美压力边际缓解，人民币方向相对稳定，没有形成额外风险拖累。\n\n- **波动率：** VIX 18.71（-3.11%）。  \n  含义：恐慌受控、风险偏好修复；但 VIX 为 delayed_streaming_900，需按非全实时理解。\n\n> **驱动判断：** 当前金融条件整体呈 **边际放松** 状态，市场更像在交易 **流动性改善下的增长修复**。"
+      },
+      {
+        "id": "risk_asset_mapping",
+        "title": "2. 风险资产映射：市场有没有顶住压力",
+        "content": "- **美股核心：** SPX 7165.07（+0.80%），NDX 27303.67（+1.95%），NVDA 208.27（+4.32%）。\n- **高 beta / 流动性资产：** BTC 77453.92（-1.06%）。\n\n> **映射判断：** 在 **利率回落 / 美元回落 / 波动率下行** 背景下，风险资产表现为 **分化修复**：美股尤其科技股明显走强，SPX 与 NDX 均在测试 1M 高点，且 NDX 明显强于 SPX；但 BTC 反而走弱，体现快照已提示的风险偏好背离。说明当前更接近 **修复延续**，但主要由 AI/科技主线驱动，而非所有高 beta 资产同步共振。"
+      },
+      {
+        "id": "commodity_validation",
+        "title": "3. 商品验证：增长、通胀还是避险",
+        "content": "- **黄金：** Gold 4709.45（+0.33%）\n- **白银：** Silver 快照未提供，模板位以缺失处理  \n- **铜：** Copper 5.9944（+0.05%）\n- **原油：** WTI 94.40（-1.51%）\n\n> **商品信号：** 金涨、铜基本持平、油回落，未形成一致的再通胀共振。  \n> **宏观含义：** 更像在交易 **增长修复 + 通胀担忧暂缓** 的混合叙事，而不是新的地缘或再通胀冲击。铜价月度仍强，但现货验证有限：洋山仓单升水 **67 美元/吨**、较前一日回落，且仅为 1 天滞后口径；SHFE 铜库存周报滞后 **162 天**，只能弱验证。"
+      },
+      {
+        "id": "regional_divergence",
+        "title": "4. 区域分化：中国资产是否跟上",
+        "content": "- **港股：** HSI 25978.07（+0.24%），HSTECH 4902.20（+0.75%）\n- **汇率辅助：** USDCNH 6.8326（-0.03%）\n\n> **区域判断：** 中国资产相对全球风险偏好表现 **偏弱但在修复**。港股和恒科均反弹，但强度明显弱于美股科技，说明当前资金对 **科技成长 / 非美资产** 的定价仍然 **改善中但分化明显**。"
+      },
+      {
+        "id": "watch_items",
+        "title": "5. 今日最关键的 3 个观察点",
+        "content": "1. **美债收益率能否继续回落**：若 US10Y、US2Y延续下行，科技股高估值仍有支撑。\n2. **NDX 对 SPX 的相对强势能否延续**：若成长继续显著占优，说明 AI 主线仍是市场最核心驱动。\n3. **BTC 与美股科技的分叉是否收敛**：若背离继续扩大，说明风险偏好修复并不全面。"
+      },
+      {
+        "id": "limitations",
+        "title": "6. 数据限制与口径",
+        "content": "- 当前数据源：tradingview-screener + macro-data-sources\n- 时效说明：VIX=delayed_streaming_900，WTI=delayed_streaming_600，NDX=delayed_streaming_900，非全实时。\n- 限制说明：当前未接入事件发布瞬时行情采样，因此 market_first_reaction 默认缺失；洋山铜升水当前接入的是 metal.com 公开页的洋山仓单升水口径，不含提单/人民币口径，且最新报价距今 1 天；SHFE 当前最新可用铜库存周报距今 162 天，需按滞后数据处理。\n- 结论适用范围：**仅适用于当前快照下的早盘判断，不构成全天单边结论。**"
+      }
+    ],
+    "key_points": [
+      "长短端美债收益率同步回落，金融条件边际放松",
+      "SPX与NDX测试1M高点，NDX显著强于SPX，成长风格主导",
+      "NVDA单日上涨4.32%，AI权重继续提供最强指数牵引",
+      "WTI回落、黄金小涨、铜横盘，再通胀压力暂未形成商品共振"
+    ],
+    "risks": [
+      "VIX、WTI、NDX为延迟行情，盘中状态可能已发生变化",
+      "缺少 market_first_reaction，无法对宏观事件后的瞬时定价做高置信判断",
+      "铜库存与洋山升水验证存在明显口径与时滞限制，商品链条只能辅助参考"
+    ],
+    "watch_items": [
+      "关注美债收益率是否继续回落并支撑科技估值",
+      "关注NDX相对SPX的强势是否延续，验证成长主线强度",
+      "关注BTC与美股科技背离是否收敛，判断风险偏好是否扩散"
+    ],
+    "signals": [
+      "NVDA: 日波动超过4.0%",
+      "NDX: 测试1M高点",
+      "SPX: 测试1M高点",
+      "BTC 与 NDX 当日强弱出现明显分叉，可作为风险偏好背离观察点。",
+      "NDX 明显强于 SPX，成长风格相对占优。"
+    ],
+    "limitations": [
+      "VIX=delayed_streaming_900",
+      "WTI=delayed_streaming_600",
+      "NDX=delayed_streaming_900",
+      "当前未接入事件发布瞬时行情采样，因此 market_first_reaction 默认缺失。",
+      "洋山铜升水当前接入的是 metal.com 公开页的洋山仓单升水口径，不含提单/人民币口径。",
+      "洋山仓单升水当前最新报价距今 1 天，需按最新可得日度数据理解。",
+      "SHFE 当前最新可用铜库存周报距今 162 天，需按滞后数据处理。",
+      "若主快照已并入本补源结果，转交时保留 missing 与 limitations 原样透出。"
+    ],
+    "sources": [
+      "tradingview-screener",
+      "macro-data-sources"
+    ],
+    "missing_items": []
+  }
+};
+
+        const $ = (id) => document.getElementById(id);
+
+        function appendList(targetId, items, emptyText) {
+            const target = $(targetId);
+            target.innerHTML = '';
+            if (!Array.isArray(items) || items.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'text-sm text-slate-500 italic';
+                li.textContent = emptyText;
+                target.appendChild(li);
+                return;
+            }
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'rounded-2xl border border-white/5 bg-white/5 px-4 py-3';
+                li.textContent = item;
+                target.appendChild(li);
+            });
+        }
+
+        function appendChips(targetId, items, emptyText) {
+            const target = $(targetId);
+            target.innerHTML = '';
+            if (!Array.isArray(items) || items.length === 0) {
+                const span = document.createElement('span');
+                span.className = 'chip rounded-full px-3 py-1 text-xs text-slate-500';
+                span.textContent = emptyText;
+                target.appendChild(span);
+                return;
+            }
+            items.forEach(item => {
+                const span = document.createElement('span');
+                span.className = 'chip rounded-full px-3 py-1 text-xs text-slate-200';
+                span.textContent = item;
+                target.appendChild(span);
+            });
+        }
+
+        function renderSections(sections) {
+            const container = $('sections-list');
+            container.innerHTML = '';
+            (Array.isArray(sections) ? sections : []).forEach(section => {
+                const card = document.createElement('article');
+                card.className = 'glass rounded-3xl p-6 shadow-2xl';
+                card.innerHTML = `
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <h2 class="text-xl font-bold text-white">${section.title || '未命名模块'}</h2>
+                        <span class="chip rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">模块</span>
+                    </div>
+                    <div class="whitespace-pre-wrap leading-8 text-slate-200">${section.content || '本模块缺失'}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderBanner(meta) {
+            const banner = $('status-banner');
+            const status = meta.publish_status || 'ok';
+            const warnings = Array.isArray(meta.warnings) ? meta.warnings : [];
+            const missingModules = Array.isArray(meta.missing_modules) ? meta.missing_modules : [];
+            const lines = [];
+            if (meta.operator_notice) lines.push(meta.operator_notice);
+            if (warnings.length) lines.push(`警告：${warnings.join('；')}`);
+            if (missingModules.length) lines.push(`缺失模块：${missingModules.join(' / ')}`);
+            if (lines.length === 0 && status === 'ok') return;
+            banner.classList.remove('hidden');
+            banner.className = 'rounded-2xl border px-5 py-4 text-sm shadow-xl ' + (
+                status === 'ok'
+                    ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-100'
+                    : 'border-amber-500/30 bg-amber-500/10 text-amber-100'
+            );
+            banner.innerHTML = `<div class="font-semibold">${status === 'ok' ? '正常发布' : '降级发布'}</div><div class="mt-2 leading-7">${lines.join('<br>')}</div>`;
+        }
+
+        function renderMissing(meta, dashboard) {
+            const hasMissing = (meta.missing_modules && meta.missing_modules.length) || (dashboard.missing_items && dashboard.missing_items.length);
+            if (!hasMissing) return;
+            $('missing-panel').classList.remove('hidden');
+            appendChips('missing-modules', meta.missing_modules || [], '暂无');
+            const list = $('missing-items');
+            list.innerHTML = '';
+            (dashboard.missing_items || []).forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'rounded-2xl border border-white/5 bg-white/5 px-4 py-3';
+                li.textContent = item.reason ? `${item.label}: ${item.reason}` : item.label;
+                list.appendChild(li);
+            });
+            if (!dashboard.missing_items || dashboard.missing_items.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'text-sm text-slate-500 italic';
+                li.textContent = '暂无缺失明细';
+                list.appendChild(li);
+            }
+        }
+
+        function render() {
+            const meta = DASHBOARD_DATA.meta || {};
+            const dashboard = DASHBOARD_DATA.dashboard || {};
+
+            $('page-title').textContent = dashboard.title || '每日市场看板';
+            $('page-subtitle').textContent = dashboard.subtitle || '';
+            $('meta-run-date').textContent = meta.run_date || '-';
+            $('meta-generated-at').textContent = meta.generated_at || '-';
+            $('market-regime').textContent = dashboard.market_regime || 'mixed';
+            $('market-summary').textContent = dashboard.summary || '暂无摘要';
+
+            renderBanner(meta);
+            renderSections(dashboard.sections || []);
+            appendList('key-points', dashboard.key_points || [], '暂无关键驱动');
+            appendList('risks', dashboard.risks || [], '暂无风险提示');
+            appendList('watch-items', dashboard.watch_items || [], '暂无观察点');
+            appendList('limitations', dashboard.limitations || [], '暂无限制说明');
+            appendList('signals', dashboard.signals || [], '暂无异常信号');
+            appendChips('sources', dashboard.sources || [], '暂无数据源');
+            renderMissing(meta, dashboard);
+        }
+
+        render();
+    </script>
+</body>
+</html>
