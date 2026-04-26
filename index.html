@@ -65,7 +65,7 @@
         </div>
     </a>
 
-    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-8">
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between px-2 border-b border-purple-900/30 pb-2">
                 <h2 class="text-lg font-bold text-purple-400 flex items-center gap-2">
@@ -117,6 +117,19 @@
                 <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
             </div>
         </div>
+
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between px-2 border-b border-cyan-900/30 pb-2">
+                <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-cyan-900/30 flex items-center justify-center text-sm">📊</span>
+                    每日看板
+                </h2>
+                <span id="count-daily" class="text-xs text-gray-600 font-mono">0</span>
+            </div>
+            <div id="list-daily" class="space-y-3 min-h-[100px]">
+                <div class="text-center py-8 text-gray-600 text-sm animate-pulse">正在扫描...</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -151,6 +164,13 @@
                 dir: '研究框架',
                 icon: '🗺️',
                 color: 'blue'
+            },
+            daily_dashboard: {
+                id: 'list-daily',
+                countId: 'count-daily',
+                dir: '每日看板',
+                icon: '📊',
+                color: 'cyan'
             }
         };
 
@@ -175,7 +195,7 @@
 
                 htmlFiles = htmlFiles.filter(file => {
                     const lowerName = file.name.toLowerCase();
-                    return !lowerName.includes('template') && !lowerName.includes('test');
+                    return !lowerName.includes('template') && !lowerName.includes('test') && lowerName !== 'latest.html';
                 });
 
                 htmlFiles.sort((a, b) => {
@@ -210,7 +230,8 @@
                         blue: 'bg-blue-900/30 text-blue-400',
                         purple: 'bg-purple-900/30 text-purple-400',
                         emerald: 'bg-emerald-900/30 text-emerald-400',
-                        gold: 'bg-amber-900/30 text-amber-400'
+                        gold: 'bg-amber-900/30 text-amber-400',
+                        cyan: 'bg-cyan-900/30 text-cyan-400'
                     }[cat.color];
 
                     card.innerHTML = `
@@ -245,7 +266,8 @@
                 fetchDirFiles('plan'),
                 fetchDirFiles('review'),
                 fetchDirFiles('mind'),
-                fetchDirFiles('framework')
+                fetchDirFiles('framework'),
+                fetchDirFiles('daily_dashboard')
             ]);
         }
 
