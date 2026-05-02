@@ -46,6 +46,16 @@
                     </div>
                     <p id="market-summary" class="leading-8 text-slate-200"></p>
                 </div>
+                <div id="module-overview-panel" class="glass hidden rounded-3xl p-6 shadow-2xl">
+                    <div class="mb-5 flex items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">模块摘要卡</h2>
+                            <p class="mt-1 text-sm text-slate-400">先看结构化脉络，再往下读完整分析。</p>
+                        </div>
+                        <span class="chip rounded-full px-3 py-1 text-xs text-slate-200">Overview Cards</span>
+                    </div>
+                    <div id="module-cards" class="grid grid-cols-1 gap-4 md:grid-cols-2"></div>
+                </div>
                 <div id="sections-list" class="grid grid-cols-1 gap-6"></div>
             </div>
 
@@ -148,6 +158,7 @@
             (Array.isArray(sections) ? sections : []).forEach(section => {
                 const card = document.createElement('article');
                 card.className = 'glass rounded-3xl p-6 shadow-2xl';
+                card.id = `section-${section.id || 'unknown'}`;
                 card.innerHTML = `
                     <div class="mb-4 flex items-center justify-between gap-4">
                         <h2 class="text-xl font-bold text-white">${section.title || '未命名模块'}</h2>
@@ -156,6 +167,42 @@
                     <div class="whitespace-pre-wrap leading-8 text-slate-200">${section.content || '本模块缺失'}</div>
                 `;
                 container.appendChild(card);
+            });
+        }
+
+        function renderModuleCards(cards) {
+            const panel = $('module-overview-panel');
+            const container = $('module-cards');
+            container.innerHTML = '';
+            if (!Array.isArray(cards) || cards.length === 0) {
+                panel.classList.add('hidden');
+                return;
+            }
+            panel.classList.remove('hidden');
+            const accentStyles = [
+                'from-cyan-500/20 to-sky-500/10 border-cyan-500/20',
+                'from-violet-500/20 to-fuchsia-500/10 border-violet-500/20',
+                'from-amber-500/20 to-orange-500/10 border-amber-500/20',
+                'from-emerald-500/20 to-teal-500/10 border-emerald-500/20'
+            ];
+            cards.forEach((card, index) => {
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = `rounded-3xl border bg-gradient-to-br p-5 text-left transition hover:-translate-y-0.5 hover:shadow-2xl ${accentStyles[index % accentStyles.length]}`;
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <h3 class="text-base font-bold text-white">${card.title || '未命名模块'}</h3>
+                        <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">详情</span>
+                    </div>
+                    <p class="mt-3 text-sm leading-7 text-slate-200">${card.summary || '暂无摘要'}</p>
+                `;
+                item.addEventListener('click', () => {
+                    const target = document.getElementById(`section-${card.id}`);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+                container.appendChild(item);
             });
         }
 
@@ -211,6 +258,7 @@
             $('market-summary').textContent = dashboard.summary || '暂无摘要';
 
             renderBanner(meta);
+            renderModuleCards(dashboard.module_cards || []);
             renderSections(dashboard.sections || []);
             appendList('key-points', dashboard.key_points || [], '暂无关键驱动');
             appendList('risks', dashboard.risks || [], '暂无风险提示');

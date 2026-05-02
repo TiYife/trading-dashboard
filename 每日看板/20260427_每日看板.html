@@ -26,6 +26,30 @@
         .section-anchor {
             scroll-margin-top: 96px;
         }
+        .tone-up {
+            color: #22c55e;
+        }
+        .tone-down {
+            color: #f43f5e;
+        }
+        .tone-flat {
+            color: #cbd5e1;
+        }
+        .bg-up {
+            background: rgba(34, 197, 94, 0.14);
+            border-color: rgba(34, 197, 94, 0.25);
+            color: #bbf7d0;
+        }
+        .bg-down {
+            background: rgba(244, 63, 94, 0.14);
+            border-color: rgba(244, 63, 94, 0.25);
+            color: #fecdd3;
+        }
+        .bg-flat {
+            background: rgba(148, 163, 184, 0.12);
+            border-color: rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+        }
     </style>
 </head>
 <body class="min-h-screen px-4 py-6 md:px-8">
@@ -78,19 +102,23 @@
                 <p id="market-summary" class="text-base leading-8 text-slate-200 md:text-lg"></p>
             </article>
             <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
-                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Confidence Panel</div>
-                <div class="mt-5 grid grid-cols-2 gap-4">
-                    <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-5">
-                        <div class="text-xs uppercase tracking-[0.16em] text-emerald-200/80">置信度</div>
-                        <div id="confidence-value" class="mt-3 text-3xl font-black text-emerald-200"></div>
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Quick Signal</div>
+                <div class="mt-5 grid grid-cols-3 gap-4">
+                    <div class="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 px-4 py-5">
+                        <div class="text-xs uppercase tracking-[0.16em] text-cyan-200/80">关键驱动</div>
+                        <div id="quick-key-count" class="mt-3 text-3xl font-black text-cyan-100"></div>
                     </div>
-                    <div class="rounded-2xl border border-violet-500/20 bg-violet-500/10 px-4 py-5">
-                        <div class="text-xs uppercase tracking-[0.16em] text-violet-200/80">证据数</div>
-                        <div id="evidence-count" class="mt-3 text-3xl font-black text-violet-200"></div>
+                    <div class="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-5">
+                        <div class="text-xs uppercase tracking-[0.16em] text-rose-200/80">风险提示</div>
+                        <div id="quick-risk-count" class="mt-3 text-3xl font-black text-rose-100"></div>
+                    </div>
+                    <div class="rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-5">
+                        <div class="text-xs uppercase tracking-[0.16em] text-amber-200/80">明日关注</div>
+                        <div id="quick-watch-count" class="mt-3 text-3xl font-black text-amber-100"></div>
                     </div>
                 </div>
-                <div class="mt-5 rounded-2xl border border-white/5 bg-white/5 px-4 py-4 text-sm leading-7 text-slate-300">
-                    顶部先给判断，中间用跨资产数据证明，底部再按分组展开短解读。
+                <div id="quick-signal-preview" class="mt-5 rounded-2xl border border-white/5 bg-white/5 px-4 py-4 text-sm leading-7 text-slate-300">
+                    先看结论，再看关键数字和风险提示。
                 </div>
             </article>
         </section>
@@ -147,31 +175,26 @@
             </article>
         </section>
 
-        <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+        <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_1fr]">
             <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
-                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Original Analysis</div>
-                <h2 class="mt-2 text-2xl font-bold text-white">原始分析全文</h2>
-                <div id="sections-list" class="mt-6 grid grid-cols-1 gap-5"></div>
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Signal Board</div>
+                <h2 class="mt-2 text-2xl font-bold text-white">关键驱动与风险</h2>
+                <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
+                    <div>
+                        <div class="mb-2 text-xs uppercase tracking-[0.16em] text-cyan-300">关键驱动</div>
+                        <ul id="key-points" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                    </div>
+                    <div>
+                        <div class="mb-2 text-xs uppercase tracking-[0.16em] text-rose-300">风险提示</div>
+                        <ul id="risks" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                    </div>
+                    <div>
+                        <div class="mb-2 text-xs uppercase tracking-[0.16em] text-amber-300">观察点</div>
+                        <ul id="watch-items" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                    </div>
+                </div>
             </article>
             <aside class="flex flex-col gap-6">
-                <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
-                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Signal Board</div>
-                    <h2 class="mt-2 text-2xl font-bold text-white">关键驱动与风险</h2>
-                    <div class="mt-5 space-y-5">
-                        <div>
-                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-cyan-300">关键驱动</div>
-                            <ul id="key-points" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
-                        </div>
-                        <div>
-                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-rose-300">风险提示</div>
-                            <ul id="risks" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
-                        </div>
-                        <div>
-                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-amber-300">观察点</div>
-                            <ul id="watch-items" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
-                        </div>
-                    </div>
-                </article>
                 <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
                     <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Data Scope</div>
                     <h2 class="mt-2 text-2xl font-bold text-white">数据口径</h2>
@@ -211,9 +234,9 @@
     <script>
         const DASHBOARD_DATA = {
   "meta": {
-    "run_id": "20260427-080329",
+    "run_id": "20260427-091944",
     "run_date": "2026-04-27",
-    "generated_at": "2026-04-27T08:03:29+08:00",
+    "generated_at": "2026-04-27T09:19:44+08:00",
     "publish_status": "ok",
     "warnings": [],
     "missing_modules": [],
@@ -226,7 +249,7 @@
     "market_regime": "risk_on",
     "header": {
       "run_date": "2026-04-27",
-      "generated_at": "2026-04-27T08:03:29+08:00",
+      "generated_at": "2026-04-27T09:19:44+08:00",
       "timezone": "Asia/Shanghai",
       "market_label": "AI主导",
       "summary": "当前市场在交易利率边际回落、波动率受控下的AI主导型风险修复。美股尤其纳指与NVDA继续领涨，BTC同步走强，说明资金仍愿意追逐高景气与高弹性资产；但美元小幅反弹、油价周度强势、港股科技偏弱，意味着这不是全面risk-on，而是由少数核心主线牵引的分化修复。",
@@ -243,7 +266,12 @@
         "week": "+1.28%",
         "month": "+8.59%",
         "state": "偏强运行",
-        "interpretation": "标普500当前偏强运行，日内变化 +0.8%。"
+        "interpretation": "标普500当前偏强运行，日内变化 +0.8%。",
+        "day_direction": "up",
+        "week_direction": "up",
+        "month_direction": "up",
+        "tone": "bullish",
+        "tone_label": "偏多"
       },
       {
         "id": "NDX",
@@ -253,7 +281,12 @@
         "week": "+2.83%",
         "month": "+14.18%",
         "state": "偏强运行",
-        "interpretation": "纳斯达克100当前偏强运行，日内变化 +1.95%。"
+        "interpretation": "纳斯达克100当前偏强运行，日内变化 +1.95%。",
+        "day_direction": "up",
+        "week_direction": "up",
+        "month_direction": "up",
+        "tone": "bullish",
+        "tone_label": "偏多"
       },
       {
         "id": "US10Y",
@@ -263,7 +296,12 @@
         "week": "-0.7bp",
         "month": "-3.8bp",
         "state": "区间震荡",
-        "interpretation": "美国10年期国债收益率当前区间震荡，日内变化 -1.9bp。"
+        "interpretation": "美国10年期国债收益率当前区间震荡，日内变化 -1.9bp。",
+        "day_direction": "down",
+        "week_direction": "down",
+        "month_direction": "down",
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "US2Y",
@@ -273,7 +311,12 @@
         "week": "+1.4bp",
         "month": "-9bp",
         "state": "区间震荡",
-        "interpretation": "美国2年期国债收益率当前区间震荡，日内变化 -4.7bp。"
+        "interpretation": "美国2年期国债收益率当前区间震荡，日内变化 -4.7bp。",
+        "day_direction": "down",
+        "week_direction": "up",
+        "month_direction": "down",
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "DXY",
@@ -283,7 +326,12 @@
         "week": "+0.37%",
         "month": "-1.23%",
         "state": "区间震荡",
-        "interpretation": "美元指数当前区间震荡，日内变化 +0.13%。"
+        "interpretation": "美元指数当前区间震荡，日内变化 +0.13%。",
+        "day_direction": "up",
+        "week_direction": "up",
+        "month_direction": "down",
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "Gold",
@@ -293,7 +341,12 @@
         "week": "-2.33%",
         "month": "+6.91%",
         "state": "区间震荡",
-        "interpretation": "黄金当前区间震荡，日内变化 -0.62%。"
+        "interpretation": "黄金当前区间震荡，日内变化 -0.62%。",
+        "day_direction": "down",
+        "week_direction": "down",
+        "month_direction": "up",
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "WTI",
@@ -303,7 +356,12 @@
         "week": "+9.11%",
         "month": "+3.08%",
         "state": "区间震荡",
-        "interpretation": "WTI原油当前区间震荡，日内变化 +1.89%。"
+        "interpretation": "WTI原油当前区间震荡，日内变化 +1.89%。",
+        "day_direction": "up",
+        "week_direction": "up",
+        "month_direction": "up",
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "BTC",
@@ -313,7 +371,12 @@
         "week": "+3.83%",
         "month": "+14.35%",
         "state": "区间震荡",
-        "interpretation": "比特币当前区间震荡，日内变化 +1.27%。"
+        "interpretation": "比特币当前区间震荡，日内变化 +1.27%。",
+        "day_direction": "up",
+        "week_direction": "up",
+        "month_direction": "up",
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "VIX",
@@ -323,7 +386,12 @@
         "week": "+2.92%",
         "month": "-27.45%",
         "state": "区间震荡",
-        "interpretation": "美股波动率指数当前区间震荡，日内变化 -3.11%。"
+        "interpretation": "美股波动率指数当前区间震荡，日内变化 -3.11%。",
+        "day_direction": "down",
+        "week_direction": "up",
+        "month_direction": "down",
+        "tone": "neutral",
+        "tone_label": "中性"
       }
     ],
     "driver_panels": [
@@ -402,7 +470,12 @@
             "week": "+1.28%",
             "month": "+8.59%",
             "state": "偏强运行",
-            "interpretation": "大盘继续测试1M高点，风险偏好维持。"
+            "interpretation": "大盘继续测试1M高点，风险偏好维持。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "NDX",
@@ -412,7 +485,12 @@
             "week": "+2.83%",
             "month": "+14.18%",
             "state": "偏强运行",
-            "interpretation": "显著强于SPX，成长风格主导最清晰。"
+            "interpretation": "显著强于SPX，成长风格主导最清晰。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "VIX",
@@ -422,7 +500,12 @@
             "week": "+2.92%",
             "month": "-27.45%",
             "state": "区间震荡",
-            "interpretation": "恐慌受控，风险修复未被波动率打断。"
+            "interpretation": "恐慌受控，风险修复未被波动率打断。",
+            "day_direction": "down",
+            "week_direction": "up",
+            "month_direction": "down",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "BTC",
@@ -432,9 +515,16 @@
             "week": "+3.83%",
             "month": "+14.35%",
             "state": "区间震荡",
-            "interpretation": "高beta资产表现积极，验证risk-on并未熄火。"
+            "interpretation": "高beta资产表现积极，验证risk-on并未熄火。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           }
-        ]
+        ],
+        "tone": "bullish",
+        "tone_label": "偏多"
       },
       {
         "id": "equity_structure",
@@ -449,7 +539,12 @@
             "week": "+1.28%",
             "month": "+8.59%",
             "state": "偏强运行",
-            "interpretation": "大盘继续测试1M高点，风险偏好维持。"
+            "interpretation": "大盘继续测试1M高点，风险偏好维持。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "NDX",
@@ -459,7 +554,12 @@
             "week": "+2.83%",
             "month": "+14.18%",
             "state": "偏强运行",
-            "interpretation": "显著强于SPX，成长风格主导最清晰。"
+            "interpretation": "显著强于SPX，成长风格主导最清晰。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "NVDA",
@@ -469,9 +569,16 @@
             "week": "+4.19%",
             "month": "+17.6%",
             "state": "区间震荡",
-            "interpretation": "AI龙头继续放大指数弹性，是当前最关键牵引。"
+            "interpretation": "AI龙头继续放大指数弹性，是当前最关键牵引。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           }
-        ]
+        ],
+        "tone": "bullish",
+        "tone_label": "偏多"
       },
       {
         "id": "rates_liquidity",
@@ -486,7 +593,12 @@
             "week": "+1.4bp",
             "month": "-9bp",
             "state": "区间震荡",
-            "interpretation": "短端回落更快，政策压制边际缓和。"
+            "interpretation": "短端回落更快，政策压制边际缓和。",
+            "day_direction": "down",
+            "week_direction": "up",
+            "month_direction": "down",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "US10Y",
@@ -496,7 +608,12 @@
             "week": "-0.7bp",
             "month": "-3.8bp",
             "state": "区间震荡",
-            "interpretation": "长端回落，有利于风险资产估值。"
+            "interpretation": "长端回落，有利于风险资产估值。",
+            "day_direction": "down",
+            "week_direction": "down",
+            "month_direction": "down",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "2Y10Y Spread",
@@ -506,7 +623,12 @@
             "week": "-2.1bp",
             "month": "+5.2bp",
             "state": "positive",
-            "interpretation": "曲线走陡，增长与政策预期在边际修复。"
+            "interpretation": "曲线走陡，增长与政策预期在边际修复。",
+            "day_direction": "up",
+            "week_direction": "down",
+            "month_direction": "up",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "FedPath",
@@ -516,9 +638,16 @@
             "week": "数据待补",
             "month": "数据待补",
             "state": "利率路径",
-            "interpretation": "下一次会议隐含不变概率约 100% 。"
+            "interpretation": "下一次会议隐含不变概率约 100% 。",
+            "day_direction": "missing",
+            "week_direction": "missing",
+            "month_direction": "missing",
+            "tone": "neutral",
+            "tone_label": "中性"
           }
-        ]
+        ],
+        "tone": "bullish",
+        "tone_label": "偏多"
       },
       {
         "id": "fx_dollar",
@@ -533,7 +662,12 @@
             "week": "+0.37%",
             "month": "-1.23%",
             "state": "区间震荡",
-            "interpretation": "日内偏强但大方向未破坏非美修复。"
+            "interpretation": "日内偏强但大方向未破坏非美修复。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "down",
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "USDJPY",
@@ -543,7 +677,12 @@
             "week": "+0.53%",
             "month": "-0.13%",
             "state": "区间震荡",
-            "interpretation": "套息环境稳定，未见剧烈去杠杆。"
+            "interpretation": "套息环境稳定，未见剧烈去杠杆。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "down",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "EURUSD",
@@ -553,7 +692,12 @@
             "week": "-0.26%",
             "month": "+1.56%",
             "state": "区间震荡",
-            "interpretation": "欧元兑美元当前区间震荡，日内变化 -0.1%。"
+            "interpretation": "欧元兑美元当前区间震荡，日内变化 -0.1%。",
+            "day_direction": "down",
+            "week_direction": "down",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "USDCNH",
@@ -563,9 +707,16 @@
             "week": "+0.19%",
             "month": "-1.17%",
             "state": "区间震荡",
-            "interpretation": "人民币总体平稳，对中国资产没有新增拖累。"
+            "interpretation": "人民币总体平稳，对中国资产没有新增拖累。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "down",
+            "tone": "bearish",
+            "tone_label": "偏空"
           }
-        ]
+        ],
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "commodities",
@@ -580,7 +731,12 @@
             "week": "-2.33%",
             "month": "+6.91%",
             "state": "区间震荡",
-            "interpretation": "避险资产回落，说明市场并未全面转向防御。"
+            "interpretation": "避险资产回落，说明市场并未全面转向防御。",
+            "day_direction": "down",
+            "week_direction": "down",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "WTI",
@@ -590,7 +746,12 @@
             "week": "+9.11%",
             "month": "+3.08%",
             "state": "区间震荡",
-            "interpretation": "油价是当前最强通胀扰动，需持续盯住。"
+            "interpretation": "油价是当前最强通胀扰动，需持续盯住。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "Copper",
@@ -600,9 +761,16 @@
             "week": "+0.14%",
             "month": "+10.55%",
             "state": "区间震荡",
-            "interpretation": "中期仍强，但短线缺乏进一步上冲动能。"
+            "interpretation": "中期仍强，但短线缺乏进一步上冲动能。",
+            "day_direction": "down",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           }
-        ]
+        ],
+        "tone": "neutral",
+        "tone_label": "中性"
       },
       {
         "id": "crypto_region",
@@ -617,7 +785,12 @@
             "week": "+3.83%",
             "month": "+14.35%",
             "state": "区间震荡",
-            "interpretation": "高beta资产表现积极，验证risk-on并未熄火。"
+            "interpretation": "高beta资产表现积极，验证risk-on并未熄火。",
+            "day_direction": "up",
+            "week_direction": "up",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "HSI",
@@ -627,7 +800,12 @@
             "week": "-0.89%",
             "month": "+2.76%",
             "state": "区间震荡",
-            "interpretation": "中国资产跟涨但不强。"
+            "interpretation": "中国资产跟涨但不强。",
+            "day_direction": "up",
+            "week_direction": "down",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           },
           {
             "id": "HSTECH",
@@ -637,9 +815,16 @@
             "week": "-3.03%",
             "month": "+0.48%",
             "state": "区间震荡",
-            "interpretation": "区域科技资产仍未跟上美股AI主线。"
+            "interpretation": "区域科技资产仍未跟上美股AI主线。",
+            "day_direction": "up",
+            "week_direction": "down",
+            "month_direction": "up",
+            "tone": "neutral",
+            "tone_label": "中性"
           }
-        ]
+        ],
+        "tone": "neutral",
+        "tone_label": "中性"
       }
     ],
     "event_footer": {
@@ -665,30 +850,35 @@
         "id": "ndx_vs_spx",
         "title": "NDX vs SPX",
         "status": "aligned",
+        "status_label": "共振",
         "summary": "两者当日同向变化，说明当前叙事存在共振。"
       },
       {
         "id": "us10y_vs_ndx",
         "title": "US10Y vs NDX",
         "status": "divergent",
+        "status_label": "背离",
         "summary": "两者当日出现背离，值得重点跟踪。"
       },
       {
         "id": "dxy_vs_gold",
         "title": "DXY vs Gold",
         "status": "divergent",
+        "status_label": "背离",
         "summary": "两者当日出现背离，值得重点跟踪。"
       },
       {
         "id": "btc_vs_vix",
         "title": "BTC vs VIX",
         "status": "divergent",
+        "status_label": "背离",
         "summary": "两者当日出现背离，值得重点跟踪。"
       },
       {
         "id": "hsi_vs_hstech",
         "title": "HSI vs HSTECH",
         "status": "aligned",
+        "status_label": "共振",
         "summary": "两者当日同向变化，说明当前叙事存在共振。"
       }
     ],
@@ -874,6 +1064,31 @@
             });
         }
 
+        function directionToneClass(direction) {
+            if (direction === 'up') return 'tone-up';
+            if (direction === 'down') return 'tone-down';
+            return 'tone-flat';
+        }
+
+        function directionBadgeClass(direction) {
+            if (direction === 'up') return 'bg-up';
+            if (direction === 'down') return 'bg-down';
+            return 'bg-flat';
+        }
+
+        function directionLabel(direction) {
+            if (direction === 'up') return '上涨';
+            if (direction === 'down') return '下跌';
+            if (direction === 'flat') return '持平';
+            return '待补';
+        }
+
+        function toneBadgeClass(tone) {
+            if (tone === 'bullish') return 'bg-up';
+            if (tone === 'bearish') return 'bg-down';
+            return 'bg-flat';
+        }
+
         function renderOverview(cards) {
             const target = $('overview-grid');
             target.innerHTML = '';
@@ -892,20 +1107,27 @@
                             <div class="text-xs uppercase tracking-[0.16em] text-slate-400">${card.label || card.id || '指标'}</div>
                             <div class="mt-3 text-3xl font-black text-white">${card.current || '数据待补'}</div>
                         </div>
-                        <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">${card.state || '数据待补'}</span>
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="rounded-full border px-3 py-1 text-[11px] ${toneBadgeClass(card.tone)}">${card.tone_label || '中性'}</span>
+                            <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">${card.state || '数据待补'}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center gap-2 text-xs">
+                        <span class="rounded-full border px-3 py-1 ${directionBadgeClass(card.day_direction)}">${directionLabel(card.day_direction)}</span>
+                        <span class="${directionToneClass(card.day_direction)} font-semibold">${card.day || '数据待补'}</span>
                     </div>
                     <div class="mt-4 grid grid-cols-3 gap-3 text-sm">
                         <div class="rounded-2xl border border-white/5 bg-white/5 px-3 py-2">
                             <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">日</div>
-                            <div class="mt-1 text-slate-100">${card.day || '数据待补'}</div>
+                            <div class="mt-1 ${directionToneClass(card.day_direction)}">${card.day || '数据待补'}</div>
                         </div>
                         <div class="rounded-2xl border border-white/5 bg-white/5 px-3 py-2">
                             <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">周</div>
-                            <div class="mt-1 text-slate-100">${card.week || '数据待补'}</div>
+                            <div class="mt-1 ${directionToneClass(card.week_direction)}">${card.week || '数据待补'}</div>
                         </div>
                         <div class="rounded-2xl border border-white/5 bg-white/5 px-3 py-2">
                             <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">月</div>
-                            <div class="mt-1 text-slate-100">${card.month || '数据待补'}</div>
+                            <div class="mt-1 ${directionToneClass(card.month_direction)}">${card.month || '数据待补'}</div>
                         </div>
                     </div>
                     <p class="mt-4 text-sm leading-7 text-slate-200">${card.interpretation || '暂无解读。'}</p>
@@ -952,12 +1174,15 @@
                                 <div class="text-xs uppercase tracking-[0.16em] text-slate-500">${item.label || item.id || '资产'}</div>
                                 <div class="mt-2 text-xl font-bold text-white">${item.current || '数据待补'}</div>
                             </div>
-                            <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">${item.state || '数据待补'}</span>
+                            <div class="flex flex-col items-end gap-2">
+                                <span class="rounded-full border px-3 py-1 text-[11px] ${toneBadgeClass(item.tone)}">${item.tone_label || '中性'}</span>
+                                <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">${item.state || '数据待补'}</span>
+                            </div>
                         </div>
                         <div class="mt-3 grid grid-cols-3 gap-2 text-xs text-slate-300">
-                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">日 ${item.day || '数据待补'}</div>
-                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">周 ${item.week || '数据待补'}</div>
-                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">月 ${item.month || '数据待补'}</div>
+                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">日 <span class="${directionToneClass(item.day_direction)}">${item.day || '数据待补'}</span></div>
+                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">周 <span class="${directionToneClass(item.week_direction)}">${item.week || '数据待补'}</span></div>
+                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">月 <span class="${directionToneClass(item.month_direction)}">${item.month || '数据待补'}</span></div>
                         </div>
                         <p class="mt-3 text-sm leading-6 text-slate-200">${item.interpretation || '暂无解读。'}</p>
                     </div>
@@ -968,7 +1193,7 @@
                             <div class="text-xs uppercase tracking-[0.16em] text-slate-500">${group.id || 'group'}</div>
                             <h3 class="mt-2 text-xl font-bold text-white">${group.title || '未命名分组'}</h3>
                         </div>
-                        <span class="chip rounded-full px-3 py-1 text-xs text-slate-200">${instruments.length} 项</span>
+                        <span class="rounded-full border px-3 py-1 text-xs ${toneBadgeClass(group.tone)}">${group.tone_label || `${instruments.length} 项`}</span>
                     </div>
                     <p class="mt-4 text-sm leading-7 text-slate-200">${group.summary || '暂无短解读。'}</p>
                     <div class="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">${instrumentHtml || '<div class="text-sm italic text-slate-500">暂无分组数据</div>'}</div>
@@ -992,28 +1217,11 @@
                 article.innerHTML = `
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-base font-bold text-white">${item.title || '关系信号'}</h3>
-                        <span class="rounded-full border px-3 py-1 text-[11px] ${badge}">${item.status || 'partial'}</span>
+                        <span class="rounded-full border px-3 py-1 text-[11px] ${badge}">${item.status_label || item.status || 'partial'}</span>
                     </div>
                     <p class="mt-3 text-sm leading-7 text-slate-200">${item.summary || '暂无关系说明。'}</p>
                 `;
                 target.appendChild(article);
-            });
-        }
-
-        function renderSections(sections) {
-            const container = $('sections-list');
-            container.innerHTML = '';
-            (Array.isArray(sections) ? sections : []).forEach((section) => {
-                const article = document.createElement('article');
-                article.className = 'rounded-3xl border border-white/10 bg-white/5 p-5';
-                article.innerHTML = `
-                    <div class="mb-4 flex items-center justify-between gap-4">
-                        <h3 class="text-xl font-bold text-white">${section.title || '未命名模块'}</h3>
-                        <span class="chip rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">${section.id || 'section'}</span>
-                    </div>
-                    <div class="whitespace-pre-wrap leading-8 text-slate-200">${section.content || '本模块缺失'}</div>
-                `;
-                container.appendChild(article);
             });
         }
 
@@ -1052,8 +1260,10 @@
             $('market-label').textContent = header.market_label || '-';
             $('market-regime').textContent = dashboard.market_regime || 'mixed';
             $('market-summary').textContent = header.summary || dashboard.summary || '暂无摘要';
-            $('confidence-value').textContent = header.confidence_pct || '0%';
-            $('evidence-count').textContent = String(header.evidence_count || 0);
+            $('quick-key-count').textContent = String((dashboard.key_points || []).length);
+            $('quick-risk-count').textContent = String((dashboard.risks || []).length);
+            $('quick-watch-count').textContent = String((dashboard.watch_items || []).length);
+            $('quick-signal-preview').textContent = (dashboard.key_points || [])[0] || header.summary || '先看结论，再看关键数字和风险提示。';
 
             renderNav();
             renderBanner(meta);
@@ -1061,7 +1271,6 @@
             renderDriverPanels(dashboard.driver_panels || []);
             renderAssetGroups(dashboard.asset_group_cards || []);
             renderRelationshipSignals(dashboard.relationship_signals || []);
-            renderSections(dashboard.sections || []);
 
             appendList('macro-events', eventFooter.macro_events || [], '暂无宏观事件');
             appendList('event-anomalies', eventFooter.anomalies || [], '暂无异常背离');

@@ -6,57 +6,162 @@
     <title>每日看板</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: radial-gradient(circle at top, #111827 0%, #020617 55%, #000 100%); color: #e5eefb; }
-        .glass { background: rgba(15, 23, 42, 0.72); border: 1px solid rgba(148, 163, 184, 0.14); backdrop-filter: blur(12px); }
-        .chip { border: 1px solid rgba(148, 163, 184, 0.2); background: rgba(15, 23, 42, 0.55); }
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            background:
+                radial-gradient(circle at top, rgba(15, 23, 42, 0.92) 0%, rgba(2, 6, 23, 0.98) 44%, #020617 100%);
+            color: #e2e8f0;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            backdrop-filter: blur(14px);
+        }
+        .chip {
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(15, 23, 42, 0.45);
+        }
+        .section-anchor {
+            scroll-margin-top: 96px;
+        }
     </style>
 </head>
-<body class="min-h-screen px-4 py-8 md:px-8">
+<body class="min-h-screen px-4 py-6 md:px-8">
     <div class="mx-auto flex max-w-7xl flex-col gap-6">
-        <header class="glass rounded-3xl p-6 shadow-2xl">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div>
+        <header class="glass rounded-[28px] p-6 shadow-2xl md:p-8">
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <div class="max-w-4xl">
                     <div class="mb-3 inline-flex items-center rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-xs text-cyan-200">
-                        每日看板 / Daily Dashboard
+                        Daily Trading Dashboard
                     </div>
-                    <h1 id="page-title" class="text-3xl font-black tracking-tight text-white md:text-4xl"></h1>
+                    <h1 id="page-title" class="text-3xl font-black tracking-tight text-white md:text-5xl"></h1>
                     <p id="page-subtitle" class="mt-3 max-w-3xl text-sm leading-7 text-slate-300 md:text-base"></p>
                 </div>
-                <div class="grid grid-cols-1 gap-3 text-sm text-slate-300 md:grid-cols-2">
+                <div class="grid grid-cols-2 gap-3 text-sm text-slate-200 md:grid-cols-4">
                     <div class="glass rounded-2xl px-4 py-3">
-                        <div class="text-[11px] uppercase tracking-[0.18em] text-slate-500">运行日期</div>
+                        <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">运行日期</div>
                         <div id="meta-run-date" class="mt-2 font-mono text-slate-100"></div>
                     </div>
                     <div class="glass rounded-2xl px-4 py-3">
-                        <div class="text-[11px] uppercase tracking-[0.18em] text-slate-500">生成时间</div>
+                        <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">生成时间</div>
                         <div id="meta-generated-at" class="mt-2 font-mono text-slate-100"></div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3">
+                        <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">市场时区</div>
+                        <div id="meta-timezone" class="mt-2 font-mono text-slate-100"></div>
+                    </div>
+                    <div class="glass rounded-2xl px-4 py-3">
+                        <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">市场标签</div>
+                        <div id="market-label" class="mt-2 text-sm font-semibold text-cyan-200"></div>
                     </div>
                 </div>
             </div>
         </header>
 
+        <nav class="glass sticky top-3 z-20 rounded-2xl px-4 py-3 shadow-xl">
+            <div id="anchor-nav" class="flex flex-wrap gap-2"></div>
+        </nav>
+
         <section id="status-banner" class="hidden rounded-2xl border px-5 py-4 text-sm shadow-xl"></section>
 
-        <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.3fr_0.9fr]">
-            <div class="flex flex-col gap-6">
-                <div class="glass rounded-3xl p-6 shadow-2xl">
-                    <div class="mb-4 flex items-center justify-between">
-                        <h2 class="text-xl font-bold text-white">市场总览</h2>
-                        <span id="market-regime" class="chip rounded-full px-3 py-1 text-xs text-slate-200"></span>
+        <section id="market-call" class="section-anchor grid grid-cols-1 gap-6 xl:grid-cols-[1.5fr_1fr]">
+            <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                <div class="mb-4 flex items-center justify-between gap-4">
+                    <div>
+                        <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Today Market Call</div>
+                        <h2 class="mt-2 text-2xl font-bold text-white">今天市场在交易什么</h2>
                     </div>
-                    <p id="market-summary" class="leading-8 text-slate-200"></p>
+                    <span id="market-regime" class="chip rounded-full px-3 py-1 text-xs text-slate-200"></span>
                 </div>
-                <div id="sections-list" class="grid grid-cols-1 gap-6"></div>
-            </div>
+                <p id="market-summary" class="text-base leading-8 text-slate-200 md:text-lg"></p>
+            </article>
+            <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Confidence Panel</div>
+                <div class="mt-5 grid grid-cols-2 gap-4">
+                    <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-5">
+                        <div class="text-xs uppercase tracking-[0.16em] text-emerald-200/80">置信度</div>
+                        <div id="confidence-value" class="mt-3 text-3xl font-black text-emerald-200"></div>
+                    </div>
+                    <div class="rounded-2xl border border-violet-500/20 bg-violet-500/10 px-4 py-5">
+                        <div class="text-xs uppercase tracking-[0.16em] text-violet-200/80">证据数</div>
+                        <div id="evidence-count" class="mt-3 text-3xl font-black text-violet-200"></div>
+                    </div>
+                </div>
+                <div class="mt-5 rounded-2xl border border-white/5 bg-white/5 px-4 py-4 text-sm leading-7 text-slate-300">
+                    顶部先给判断，中间用跨资产数据证明，底部再按分组展开短解读。
+                </div>
+            </article>
+        </section>
 
-            <div class="flex flex-col gap-6">
-                <div class="glass rounded-3xl p-6 shadow-2xl">
-                    <h2 class="text-lg font-bold text-white">关键驱动</h2>
-                    <ul id="key-points" class="mt-4 space-y-3 text-sm leading-7 text-slate-200"></ul>
+        <section id="overview" class="section-anchor glass rounded-[28px] p-6 shadow-2xl md:p-7">
+            <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Cross Asset Dashboard</div>
+                    <h2 class="mt-2 text-2xl font-bold text-white">跨资产总览</h2>
+                    <p class="mt-1 text-sm text-slate-400">一屏先看风险偏好、利率压力、美元方向与商品验证。</p>
                 </div>
-                <div class="glass rounded-3xl p-6 shadow-2xl">
-                    <h2 class="text-lg font-bold text-white">风险与观察</h2>
-                    <div class="mt-4 space-y-5">
+            </div>
+            <div id="overview-grid" class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+        </section>
+
+        <section id="drivers" class="section-anchor glass rounded-[28px] p-6 shadow-2xl md:p-7">
+            <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Driver Panels</div>
+                    <h2 class="mt-2 text-2xl font-bold text-white">驱动层</h2>
+                    <p class="mt-1 text-sm text-slate-400">不是只展示涨跌，而是展示今天为什么这样涨跌。</p>
+                </div>
+            </div>
+            <div id="driver-panels" class="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2"></div>
+        </section>
+
+        <section id="groups" class="section-anchor glass rounded-[28px] p-6 shadow-2xl md:p-7">
+            <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Asset Group Layers</div>
+                    <h2 class="mt-2 text-2xl font-bold text-white">资产组层</h2>
+                    <p class="mt-1 text-sm text-slate-400">每组一张卡，既有数字，也有 1-3 句短解读。</p>
+                </div>
+            </div>
+            <div id="asset-group-cards" class="mt-6 grid grid-cols-1 gap-5 xl:grid-cols-2"></div>
+        </section>
+
+        <section id="events" class="section-anchor grid grid-cols-1 gap-6 xl:grid-cols-[1.1fr_1fr_1fr]">
+            <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Macro Events</div>
+                <h2 class="mt-2 text-2xl font-bold text-white">事件提醒</h2>
+                <ul id="macro-events" class="mt-5 space-y-3 text-sm leading-7 text-slate-200"></ul>
+            </article>
+            <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Relationship Signals</div>
+                <h2 class="mt-2 text-2xl font-bold text-white">异常背离</h2>
+                <div id="relationship-signals" class="mt-5 space-y-3"></div>
+                <ul id="event-anomalies" class="mt-5 space-y-3 text-sm leading-7 text-slate-200"></ul>
+            </article>
+            <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Tomorrow Watch</div>
+                <h2 class="mt-2 text-2xl font-bold text-white">明日关注</h2>
+                <ul id="tomorrow-watch" class="mt-5 space-y-3 text-sm leading-7 text-slate-200"></ul>
+            </article>
+        </section>
+
+        <section class="grid grid-cols-1 gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+            <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Original Analysis</div>
+                <h2 class="mt-2 text-2xl font-bold text-white">原始分析全文</h2>
+                <div id="sections-list" class="mt-6 grid grid-cols-1 gap-5"></div>
+            </article>
+            <aside class="flex flex-col gap-6">
+                <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Signal Board</div>
+                    <h2 class="mt-2 text-2xl font-bold text-white">关键驱动与风险</h2>
+                    <div class="mt-5 space-y-5">
+                        <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-cyan-300">关键驱动</div>
+                            <ul id="key-points" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
                         <div>
                             <div class="mb-2 text-xs uppercase tracking-[0.16em] text-rose-300">风险提示</div>
                             <ul id="risks" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
@@ -66,27 +171,29 @@
                             <ul id="watch-items" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
                         </div>
                     </div>
-                </div>
-                <div class="glass rounded-3xl p-6 shadow-2xl">
-                    <h2 class="text-lg font-bold text-white">数据口径</h2>
-                    <div class="mt-4 space-y-4">
+                </article>
+                <article class="glass rounded-[28px] p-6 shadow-2xl md:p-7">
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Data Scope</div>
+                    <h2 class="mt-2 text-2xl font-bold text-white">数据口径</h2>
+                    <div class="mt-5 space-y-4">
                         <div>
                             <div class="mb-2 text-xs uppercase tracking-[0.16em] text-cyan-300">数据源</div>
                             <div id="sources" class="flex flex-wrap gap-2"></div>
                         </div>
                         <div>
+                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-fuchsia-300">快照信号</div>
+                            <ul id="signals" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
+                        </div>
+                        <div>
                             <div class="mb-2 text-xs uppercase tracking-[0.16em] text-slate-400">限制说明</div>
                             <ul id="limitations" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
                         </div>
-                        <div>
-                            <div class="mb-2 text-xs uppercase tracking-[0.16em] text-fuchsia-300">异常信号</div>
-                            <ul id="signals" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
-                        </div>
                     </div>
-                </div>
-                <div id="missing-panel" class="glass hidden rounded-3xl p-6 shadow-2xl">
-                    <h2 class="text-lg font-bold text-white">缺失项</h2>
-                    <div class="mt-4 space-y-4">
+                </article>
+                <article id="missing-panel" class="glass hidden rounded-[28px] p-6 shadow-2xl md:p-7">
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500">Missing Data</div>
+                    <h2 class="mt-2 text-2xl font-bold text-white">缺失项</h2>
+                    <div class="mt-5 space-y-4">
                         <div>
                             <div class="mb-2 text-xs uppercase tracking-[0.16em] text-orange-300">缺失模块</div>
                             <div id="missing-modules" class="flex flex-wrap gap-2"></div>
@@ -96,17 +203,17 @@
                             <ul id="missing-items" class="space-y-3 text-sm leading-7 text-slate-200"></ul>
                         </div>
                     </div>
-                </div>
-            </div>
+                </article>
+            </aside>
         </section>
     </div>
 
     <script>
         const DASHBOARD_DATA = {
   "meta": {
-    "run_id": "20260426-114528",
+    "run_id": "20260426-120901",
     "run_date": "2026-04-24",
-    "generated_at": "2026-04-26T11:45:28+08:00",
+    "generated_at": "2026-04-26T12:09:01+08:00",
     "publish_status": "ok",
     "warnings": [],
     "missing_modules": [],
@@ -114,9 +221,452 @@
   },
   "dashboard": {
     "title": "早盘拉扯偏谨慎",
-    "subtitle": "自动生成的每日早盘总览",
+    "subtitle": "让人 1 分钟内看明白今天市场在交易什么",
     "summary": "当前市场更像是在利率偏紧背景下消化再通胀和地缘扰动，美股高位回吐但未出现全面 risk-off，中国资产尤其港股科技相对更弱。由于 VIX、WTI、NDX 存在延迟且缺少宏观事件瞬时反应数据，暂不能下全天单边结论。",
     "market_regime": "mixed",
+    "header": {
+      "run_date": "2026-04-24",
+      "generated_at": "2026-04-26T12:09:01+08:00",
+      "timezone": "Asia/Shanghai",
+      "market_label": "分化",
+      "summary": "当前市场更像是在利率偏紧背景下消化再通胀和地缘扰动，美股高位回吐但未出现全面 risk-off，中国资产尤其港股科技相对更弱。由于 VIX、WTI、NDX 存在延迟且缺少宏观事件瞬时反应数据，暂不能下全天单边结论。",
+      "confidence": 0.0,
+      "confidence_pct": "0%",
+      "evidence_count": 0
+    },
+    "overview_grid": [
+      {
+        "id": "SPX",
+        "label": "标普500",
+        "current": "7,108.41",
+        "day": "-0.41%",
+        "week": "+1%",
+        "month": "+8.49%",
+        "state": "区间震荡",
+        "interpretation": "标普500当前区间震荡，日内变化 -0.41%。"
+      },
+      {
+        "id": "NDX",
+        "label": "纳斯达克100",
+        "current": "26,782.62",
+        "day": "-0.57%",
+        "week": "+2%",
+        "month": "+11.4%",
+        "state": "区间震荡",
+        "interpretation": "纳斯达克100当前区间震荡，日内变化 -0.57%。"
+      },
+      {
+        "id": "US10Y",
+        "label": "美国10年期国债收益率",
+        "current": "4.325%",
+        "day": "+2bp",
+        "week": "+5.1bp",
+        "month": "-1.5bp",
+        "state": "区间震荡",
+        "interpretation": "美国10年期国债收益率当前区间震荡，日内变化 +2bp。"
+      },
+      {
+        "id": "US2Y",
+        "label": "美国2年期国债收益率",
+        "current": "3.832%",
+        "day": "+2.8bp",
+        "week": "+7.7bp",
+        "month": "-1.6bp",
+        "state": "区间震荡",
+        "interpretation": "美国2年期国债收益率当前区间震荡，日内变化 +2.8bp。"
+      },
+      {
+        "id": "DXY",
+        "label": "美元指数",
+        "current": "98.82",
+        "day": "+0.03%",
+        "week": "+0.65%",
+        "month": "-0.38%",
+        "state": "区间震荡",
+        "interpretation": "美元指数当前区间震荡，日内变化 +0.03%。"
+      },
+      {
+        "id": "Gold",
+        "label": "黄金",
+        "current": "4,697.96",
+        "day": "+0.09%",
+        "week": "-1.95%",
+        "month": "+5.1%",
+        "state": "区间震荡",
+        "interpretation": "黄金当前区间震荡，日内变化 +0.09%。"
+      },
+      {
+        "id": "WTI",
+        "label": "WTI原油",
+        "current": "96.82",
+        "day": "+1.01%",
+        "week": "+7.91%",
+        "month": "+9.41%",
+        "state": "区间震荡",
+        "interpretation": "WTI原油当前区间震荡，日内变化 +1.01%。"
+      },
+      {
+        "id": "BTC",
+        "label": "比特币",
+        "current": "78,281.31",
+        "day": "+0.09%",
+        "week": "+4.15%",
+        "month": "+10.98%",
+        "state": "区间震荡",
+        "interpretation": "比特币当前区间震荡，日内变化 +0.09%。"
+      },
+      {
+        "id": "VIX",
+        "label": "美股波动率指数",
+        "current": "19.31",
+        "day": "+2.06%",
+        "week": "+7.04%",
+        "month": "-25.47%",
+        "state": "区间震荡",
+        "interpretation": "美股波动率指数当前区间震荡，日内变化 +2.06%。"
+      }
+    ],
+    "driver_panels": [
+      {
+        "id": "growth_expectation",
+        "title": "增长预期",
+        "verdict": "",
+        "evidence": [],
+        "short_comment": "当前市场在交易 **增长修复与再通胀/地缘扰动并存**，主导变量是 **美债利率上行 / 油价维持高位**，整体处于 **中性拉扯** 状态。"
+      },
+      {
+        "id": "rate_expectation",
+        "title": "利率预期",
+        "verdict": "",
+        "evidence": [],
+        "short_comment": "当前市场在交易 **增长修复与再通胀/地缘扰动并存**，主导变量是 **美债利率上行 / 油价维持高位**，整体处于 **中性拉扯** 状态。"
+      },
+      {
+        "id": "inflation_expectation",
+        "title": "通胀预期",
+        "verdict": "",
+        "evidence": [],
+        "short_comment": "当前市场在交易 **增长修复与再通胀/地缘扰动并存**，主导变量是 **美债利率上行 / 油价维持高位**，整体处于 **中性拉扯** 状态。"
+      },
+      {
+        "id": "dollar_liquidity",
+        "title": "流动性/美元",
+        "verdict": "",
+        "evidence": [],
+        "short_comment": "- **利率：** US10Y 4.325%（+2.0bp），US2Y 3.832%（+2.8bp），2Y10Y 利差 49.3bp。  \n  含义：长短端同步上行且短端更强，曲线仍保持正斜率但日内略收窄，说明降息预期没有继续明显放松，估值端仍受利率约束。\n\n- **美元：** DXY 98.823（+0.03%），USDJPY 159.762（+0.02%），USDCNH 6.8347（约持平）。  \n  含义：美元整体偏稳偏强，非美没有出现明显顺风，但人民币也未明显走弱，说明外汇层面暂未形成额外冲击。\n\n- **波动率：** VIX 19.31（+2.06%）。  \n  含义：恐慌没有失控，但避险需求较前一日略有抬头；且 VIX 为 delayed_streaming_900，需按非全实时理解。\n\n> **驱动判断：** 当前金融条件整体呈 **中性偏紧** 状态，市场更像在交易 **利率约束下的风险资产消化**。此外，联储路径显示 4 月 29 日会议隐含 **99% 不变**、年末仅计入 **9.7bp** 降息，短端宽松预期并不强。"
+      },
+      {
+        "id": "risk_sentiment",
+        "title": "风险偏好/波动率",
+        "verdict": "",
+        "evidence": [],
+        "short_comment": "- **利率：** US10Y 4.325%（+2.0bp），US2Y 3.832%（+2.8bp），2Y10Y 利差 49.3bp。  \n  含义：长短端同步上行且短端更强，曲线仍保持正斜率但日内略收窄，说明降息预期没有继续明显放松，估值端仍受利率约束。\n\n- **美元：** DXY 98.823（+0.03%），USDJPY 159.762（+0.02%），USDCNH 6.8347（约持平）。  \n  含义：美元整体偏稳偏强，非美没有出现明显顺风，但人民币也未明显走弱，说明外汇层面暂未形成额外冲击。\n\n- **波动率：** VIX 19.31（+2.06%）。  \n  含义：恐慌没有失控，但避险需求较前一日略有抬头；且 VIX 为 delayed_streaming_900，需按非全实时理解。\n\n> **驱动判断：** 当前金融条件整体呈 **中性偏紧** 状态，市场更像在交易 **利率约束下的风险资产消化**。此外，联储路径显示 4 月 29 日会议隐含 **99% 不变**、年末仅计入 **9.7bp** 降息，短端宽松预期并不强。"
+      }
+    ],
+    "asset_group_cards": [
+      {
+        "id": "market_state",
+        "title": "市场状态组",
+        "summary": "- **利率：** US10Y 4.325%（+2.0bp），US2Y 3.832%（+2.8bp），2Y10Y 利差 49.3bp。  \n  含义：长短端同步上行且短端更强，曲线仍保持正斜率但日内略收窄，说明降息预期没有继续明显放松，估值端仍受利率约束。\n\n- **美元：** DXY 98.823（+0.03%），USDJPY 159.762（+0.02%），USDCNH 6.8347（约持平）。  \n  含义：美元整体偏稳偏强，非美没有出现明显顺风，但人民币也未明显走弱，说明外汇层面暂未形成额外冲击。\n\n- **波动率：** VIX 19.31（+2.06%）。  \n  含义：恐慌没有失控，但避险需求较前一日略有抬头；且 VIX 为 delayed_streaming_900，需按非全实时理解。\n\n> **驱动判断：** 当前金融条件整体呈 **中性偏紧** 状态，市场更像在交易 **利率约束下的风险资产消化**。此外，联储路径显示 4 月 29 日会议隐含 **99% 不变**、年末仅计入 **9.7bp** 降息，短端宽松预期并不强。",
+        "instruments": [
+          {
+            "id": "SPX",
+            "label": "标普500",
+            "current": "7,108.41",
+            "day": "-0.41%",
+            "week": "+1%",
+            "month": "+8.49%",
+            "state": "区间震荡",
+            "interpretation": "标普500当前区间震荡，日内变化 -0.41%。"
+          },
+          {
+            "id": "NDX",
+            "label": "纳斯达克100",
+            "current": "26,782.62",
+            "day": "-0.57%",
+            "week": "+2%",
+            "month": "+11.4%",
+            "state": "区间震荡",
+            "interpretation": "纳斯达克100当前区间震荡，日内变化 -0.57%。"
+          },
+          {
+            "id": "VIX",
+            "label": "美股波动率指数",
+            "current": "19.31",
+            "day": "+2.06%",
+            "week": "+7.04%",
+            "month": "-25.47%",
+            "state": "区间震荡",
+            "interpretation": "美股波动率指数当前区间震荡，日内变化 +2.06%。"
+          },
+          {
+            "id": "BTC",
+            "label": "比特币",
+            "current": "78,281.31",
+            "day": "+0.09%",
+            "week": "+4.15%",
+            "month": "+10.98%",
+            "state": "区间震荡",
+            "interpretation": "比特币当前区间震荡，日内变化 +0.09%。"
+          }
+        ]
+      },
+      {
+        "id": "equity_structure",
+        "title": "权益结构组",
+        "summary": "- **美股核心：** SPX 7108.41（-0.41%），NDX 26782.62（-0.57%），NVDA 199.64（-1.41%）。\n- **高 beta / 流动性资产：** BTC 78281.31（+0.09%）。\n\n> **映射判断：** 在 **利率上行 / 美元偏稳 / 波动率小幅抬升** 背景下，风险资产表现为 **分化修复**：美股尤其成长股偏弱，但 BTC 仍维持韧性，说明当前更接近 **高位震荡中的估值消化**，还不是全面 risk-off。需注意快照已提示 **BTC 与 VIX 当日同涨**，风险偏好与避险信号存在打架。",
+        "instruments": [
+          {
+            "id": "SPX",
+            "label": "标普500",
+            "current": "7,108.41",
+            "day": "-0.41%",
+            "week": "+1%",
+            "month": "+8.49%",
+            "state": "区间震荡",
+            "interpretation": "标普500当前区间震荡，日内变化 -0.41%。"
+          },
+          {
+            "id": "NDX",
+            "label": "纳斯达克100",
+            "current": "26,782.62",
+            "day": "-0.57%",
+            "week": "+2%",
+            "month": "+11.4%",
+            "state": "区间震荡",
+            "interpretation": "纳斯达克100当前区间震荡，日内变化 -0.57%。"
+          },
+          {
+            "id": "NVDA",
+            "label": "英伟达",
+            "current": "199.64",
+            "day": "-1.41%",
+            "week": "+1.12%",
+            "month": "+14.19%",
+            "state": "区间震荡",
+            "interpretation": "英伟达当前区间震荡，日内变化 -1.41%。"
+          }
+        ]
+      },
+      {
+        "id": "rates_liquidity",
+        "title": "利率与流动性组",
+        "summary": "当前市场在交易 **增长修复与再通胀/地缘扰动并存**，主导变量是 **美债利率上行 / 油价维持高位**，整体处于 **中性拉扯** 状态。",
+        "instruments": [
+          {
+            "id": "US2Y",
+            "label": "美国2年期国债收益率",
+            "current": "3.832%",
+            "day": "+2.8bp",
+            "week": "+7.7bp",
+            "month": "-1.6bp",
+            "state": "区间震荡",
+            "interpretation": "美国2年期国债收益率当前区间震荡，日内变化 +2.8bp。"
+          },
+          {
+            "id": "US10Y",
+            "label": "美国10年期国债收益率",
+            "current": "4.325%",
+            "day": "+2bp",
+            "week": "+5.1bp",
+            "month": "-1.5bp",
+            "state": "区间震荡",
+            "interpretation": "美国10年期国债收益率当前区间震荡，日内变化 +2bp。"
+          },
+          {
+            "id": "2Y10Y Spread",
+            "label": "10Y-2Y利差",
+            "current": "49.3bp",
+            "day": "-0.8bp",
+            "week": "-2.6bp",
+            "month": "+0.1bp",
+            "state": "positive",
+            "interpretation": "10Y-2Y利差当前positive，日内变化 -0.8bp。"
+          },
+          {
+            "id": "FedPath",
+            "label": "OIS / Fed Funds Futures",
+            "current": "9.7bp",
+            "day": "数据待补",
+            "week": "数据待补",
+            "month": "数据待补",
+            "state": "利率路径",
+            "interpretation": "下一次会议隐含不变概率约 99% 。"
+          }
+        ]
+      },
+      {
+        "id": "fx_dollar",
+        "title": "美元与外汇组",
+        "summary": "- **利率：** US10Y 4.325%（+2.0bp），US2Y 3.832%（+2.8bp），2Y10Y 利差 49.3bp。  \n  含义：长短端同步上行且短端更强，曲线仍保持正斜率但日内略收窄，说明降息预期没有继续明显放松，估值端仍受利率约束。\n\n- **美元：** DXY 98.823（+0.03%），USDJPY 159.762（+0.02%），USDCNH 6.8347（约持平）。  \n  含义：美元整体偏稳偏强，非美没有出现明显顺风，但人民币也未明显走弱，说明外汇层面暂未形成额外冲击。\n\n- **波动率：** VIX 19.31（+2.06%）。  \n  含义：恐慌没有失控，但避险需求较前一日略有抬头；且 VIX 为 delayed_streaming_900，需按非全实时理解。\n\n> **驱动判断：** 当前金融条件整体呈 **中性偏紧** 状态，市场更像在交易 **利率约束下的风险资产消化**。此外，联储路径显示 4 月 29 日会议隐含 **99% 不变**、年末仅计入 **9.7bp** 降息，短端宽松预期并不强。",
+        "instruments": [
+          {
+            "id": "DXY",
+            "label": "美元指数",
+            "current": "98.82",
+            "day": "+0.03%",
+            "week": "+0.65%",
+            "month": "-0.38%",
+            "state": "区间震荡",
+            "interpretation": "美元指数当前区间震荡，日内变化 +0.03%。"
+          },
+          {
+            "id": "USDJPY",
+            "label": "美元兑日元",
+            "current": "159.76",
+            "day": "+0.02%",
+            "week": "+0.4%",
+            "month": "+0.68%",
+            "state": "区间震荡",
+            "interpretation": "美元兑日元当前区间震荡，日内变化 +0.02%。"
+          },
+          {
+            "id": "EURUSD",
+            "label": "欧元兑美元",
+            "current": "1.168",
+            "day": "0%",
+            "week": "-0.83%",
+            "month": "+0.66%",
+            "state": "区间震荡",
+            "interpretation": "欧元兑美元当前区间震荡，日内变化 0%。"
+          },
+          {
+            "id": "USDCNH",
+            "label": "美元兑离岸人民币",
+            "current": "6.835",
+            "day": "-0%",
+            "week": "+0.19%",
+            "month": "-0.77%",
+            "state": "区间震荡",
+            "interpretation": "美元兑离岸人民币当前区间震荡，日内变化 -0%。"
+          }
+        ]
+      },
+      {
+        "id": "commodities",
+        "title": "大宗商品组",
+        "summary": "- **黄金：** Gold 4697.96（+0.09%）\n- **白银：** Silver 快照未提供  \n- **铜：** Copper 6.0062（+0.25%）\n- **原油：** WTI 96.82（+1.01%）\n\n> **商品信号：** 金、铜、油同涨，但油更强，且 WTI 周涨幅已达 **+7.91%**，属于异常波动；黄金与 DXY、US10Y 当日同向，也提示传统映射并不干净。  \n> **宏观含义：** 更像在交易 **再通胀 + 地缘扰动 + 增长韧性** 的混合叙事，而不是单一避险或单一增长修复。铜价偏强，但库存验证存在明显限制：洋山仓单升水为 **69 美元/吨**、仅日度滞后 1 天；SHFE 铜库存周报距今 **161 天**，只能弱验证。",
+        "instruments": [
+          {
+            "id": "Gold",
+            "label": "黄金",
+            "current": "4,697.96",
+            "day": "+0.09%",
+            "week": "-1.95%",
+            "month": "+5.1%",
+            "state": "区间震荡",
+            "interpretation": "黄金当前区间震荡，日内变化 +0.09%。"
+          },
+          {
+            "id": "WTI",
+            "label": "WTI原油",
+            "current": "96.82",
+            "day": "+1.01%",
+            "week": "+7.91%",
+            "month": "+9.41%",
+            "state": "区间震荡",
+            "interpretation": "WTI原油当前区间震荡，日内变化 +1.01%。"
+          },
+          {
+            "id": "Copper",
+            "label": "铜价",
+            "current": "6.006",
+            "day": "+0.25%",
+            "week": "+0.14%",
+            "month": "+9.44%",
+            "state": "区间震荡",
+            "interpretation": "铜价当前区间震荡，日内变化 +0.25%。"
+          }
+        ]
+      },
+      {
+        "id": "crypto_region",
+        "title": "加密/区域组",
+        "summary": "- **美股核心：** SPX 7108.41（-0.41%），NDX 26782.62（-0.57%），NVDA 199.64（-1.41%）。\n- **高 beta / 流动性资产：** BTC 78281.31（+0.09%）。\n\n> **映射判断：** 在 **利率上行 / 美元偏稳 / 波动率小幅抬升** 背景下，风险资产表现为 **分化修复**：美股尤其成长股偏弱，但 BTC 仍维持韧性，说明当前更接近 **高位震荡中的估值消化**，还不是全面 risk-off。需注意快照已提示 **BTC 与 VIX 当日同涨**，风险偏好与避险信号存在打架。",
+        "instruments": [
+          {
+            "id": "BTC",
+            "label": "比特币",
+            "current": "78,281.31",
+            "day": "+0.09%",
+            "week": "+4.15%",
+            "month": "+10.98%",
+            "state": "区间震荡",
+            "interpretation": "比特币当前区间震荡，日内变化 +0.09%。"
+          },
+          {
+            "id": "HSI",
+            "label": "恒生指数",
+            "current": "25,915.2",
+            "day": "-0.95%",
+            "week": "-0.79%",
+            "month": "+4.67%",
+            "state": "区间震荡",
+            "interpretation": "恒生指数当前区间震荡，日内变化 -0.95%。"
+          },
+          {
+            "id": "HSTECH",
+            "label": "恒生科技指数",
+            "current": "4,865.52",
+            "day": "-1.98%",
+            "week": "-2.22%",
+            "month": "+1.93%",
+            "state": "区间震荡",
+            "interpretation": "恒生科技指数当前区间震荡，日内变化 -1.98%。"
+          }
+        ]
+      }
+    ],
+    "event_footer": {
+      "macro_events": [
+        "非农就业 / 日期 2026-04-03 / 预期 60k",
+        "失业率 / 日期 2026-04-03 / 实际 4.3% / 预期 4.4%",
+        "CPI / 日期 2026-04-10 / 实际同比 3.32% / 预期同比 3.3%",
+        "PCE / 日期 April 9, 2026 / 实际同比 2.8% / 预期同比 2.8%"
+      ],
+      "anomalies": [
+        "VIX、WTI、NDX为延迟行情，盘中状态可能已发生变化",
+        "当前未接入 market_first_reaction，无法做宏观事件后的瞬时定价复盘",
+        "铜库存与洋山升水验证口径存在滞后或不完整，商品链条判断只能做辅助参考"
+      ],
+      "tomorrow_watch": [
+        "关注US10Y和US2Y是否继续上行并压制成长股",
+        "关注WTI是否延续高位上冲，把市场进一步推向再通胀交易",
+        "关注HSTECH能否止跌修复，验证中国资产是否跟上全球风险偏好"
+      ]
+    },
+    "relationship_signals": [
+      {
+        "id": "ndx_vs_spx",
+        "title": "NDX vs SPX",
+        "status": "aligned",
+        "summary": "两者当日同向变化，说明当前叙事存在共振。"
+      },
+      {
+        "id": "us10y_vs_ndx",
+        "title": "US10Y vs NDX",
+        "status": "divergent",
+        "summary": "两者当日出现背离，值得重点跟踪。"
+      },
+      {
+        "id": "dxy_vs_gold",
+        "title": "DXY vs Gold",
+        "status": "aligned",
+        "summary": "两者当日同向变化，说明当前叙事存在共振。"
+      },
+      {
+        "id": "btc_vs_vix",
+        "title": "BTC vs VIX",
+        "status": "aligned",
+        "summary": "两者当日同向变化，说明当前叙事存在共振。"
+      },
+      {
+        "id": "hsi_vs_hstech",
+        "title": "HSI vs HSTECH",
+        "status": "aligned",
+        "summary": "两者当日同向变化，说明当前叙事存在共振。"
+      }
+    ],
     "sections": [
       {
         "id": "one_line_conclusion",
@@ -193,7 +743,6 @@
     "missing_items": []
   }
 };
-
         const $ = (id) => document.getElementById(id);
 
         function appendList(targetId, items, emptyText) {
@@ -201,12 +750,12 @@
             target.innerHTML = '';
             if (!Array.isArray(items) || items.length === 0) {
                 const li = document.createElement('li');
-                li.className = 'text-sm text-slate-500 italic';
+                li.className = 'text-sm italic text-slate-500';
                 li.textContent = emptyText;
                 target.appendChild(li);
                 return;
             }
-            items.forEach(item => {
+            items.forEach((item) => {
                 const li = document.createElement('li');
                 li.className = 'rounded-2xl border border-white/5 bg-white/5 px-4 py-3';
                 li.textContent = item;
@@ -224,28 +773,11 @@
                 target.appendChild(span);
                 return;
             }
-            items.forEach(item => {
+            items.forEach((item) => {
                 const span = document.createElement('span');
                 span.className = 'chip rounded-full px-3 py-1 text-xs text-slate-200';
                 span.textContent = item;
                 target.appendChild(span);
-            });
-        }
-
-        function renderSections(sections) {
-            const container = $('sections-list');
-            container.innerHTML = '';
-            (Array.isArray(sections) ? sections : []).forEach(section => {
-                const card = document.createElement('article');
-                card.className = 'glass rounded-3xl p-6 shadow-2xl';
-                card.innerHTML = `
-                    <div class="mb-4 flex items-center justify-between gap-4">
-                        <h2 class="text-xl font-bold text-white">${section.title || '未命名模块'}</h2>
-                        <span class="chip rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">模块</span>
-                    </div>
-                    <div class="whitespace-pre-wrap leading-8 text-slate-200">${section.content || '本模块缺失'}</div>
-                `;
-                container.appendChild(card);
             });
         }
 
@@ -268,6 +800,172 @@
             banner.innerHTML = `<div class="font-semibold">${status === 'ok' ? '正常发布' : '降级发布'}</div><div class="mt-2 leading-7">${lines.join('<br>')}</div>`;
         }
 
+        function renderNav() {
+            const items = [
+                ['market-call', '总判断'],
+                ['overview', '总览'],
+                ['drivers', '驱动'],
+                ['groups', '分组'],
+                ['events', '异常']
+            ];
+            const target = $('anchor-nav');
+            target.innerHTML = '';
+            items.forEach(([id, label]) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'chip rounded-full px-4 py-2 text-sm text-slate-200 transition hover:bg-cyan-500/10 hover:text-cyan-200';
+                button.textContent = label;
+                button.addEventListener('click', () => {
+                    const el = document.getElementById(id);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+                target.appendChild(button);
+            });
+        }
+
+        function renderOverview(cards) {
+            const target = $('overview-grid');
+            target.innerHTML = '';
+            const accents = [
+                'border-cyan-500/20 bg-cyan-500/10',
+                'border-violet-500/20 bg-violet-500/10',
+                'border-emerald-500/20 bg-emerald-500/10',
+                'border-amber-500/20 bg-amber-500/10'
+            ];
+            (Array.isArray(cards) ? cards : []).forEach((card, index) => {
+                const item = document.createElement('article');
+                item.className = `rounded-3xl border p-5 ${accents[index % accents.length]}`;
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <div class="text-xs uppercase tracking-[0.16em] text-slate-400">${card.label || card.id || '指标'}</div>
+                            <div class="mt-3 text-3xl font-black text-white">${card.current || '数据待补'}</div>
+                        </div>
+                        <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">${card.state || '数据待补'}</span>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-3 text-sm">
+                        <div class="rounded-2xl border border-white/5 bg-white/5 px-3 py-2">
+                            <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">日</div>
+                            <div class="mt-1 text-slate-100">${card.day || '数据待补'}</div>
+                        </div>
+                        <div class="rounded-2xl border border-white/5 bg-white/5 px-3 py-2">
+                            <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">周</div>
+                            <div class="mt-1 text-slate-100">${card.week || '数据待补'}</div>
+                        </div>
+                        <div class="rounded-2xl border border-white/5 bg-white/5 px-3 py-2">
+                            <div class="text-[11px] uppercase tracking-[0.16em] text-slate-500">月</div>
+                            <div class="mt-1 text-slate-100">${card.month || '数据待补'}</div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-sm leading-7 text-slate-200">${card.interpretation || '暂无解读。'}</p>
+                `;
+                target.appendChild(item);
+            });
+        }
+
+        function renderDriverPanels(panels) {
+            const target = $('driver-panels');
+            target.innerHTML = '';
+            (Array.isArray(panels) ? panels : []).forEach((panel) => {
+                const article = document.createElement('article');
+                article.className = 'rounded-3xl border border-white/10 bg-white/5 p-5';
+                const evidence = Array.isArray(panel.evidence) && panel.evidence.length
+                    ? panel.evidence.map(item => `<li class="rounded-2xl border border-white/5 bg-slate-950/30 px-3 py-2">${item}</li>`).join('')
+                    : '<li class="text-sm italic text-slate-500">暂无结构化证据</li>';
+                article.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <div class="text-xs uppercase tracking-[0.16em] text-slate-500">${panel.id || 'driver'}</div>
+                            <h3 class="mt-2 text-xl font-bold text-white">${panel.title || '未命名驱动'}</h3>
+                        </div>
+                        <span class="chip rounded-full px-3 py-1 text-xs text-slate-200">${panel.verdict || '待判断'}</span>
+                    </div>
+                    <p class="mt-4 text-sm leading-7 text-slate-200">${panel.short_comment || '暂无短评。'}</p>
+                    <ul class="mt-4 space-y-2 text-sm leading-7 text-slate-200">${evidence}</ul>
+                `;
+                target.appendChild(article);
+            });
+        }
+
+        function renderAssetGroups(groups) {
+            const target = $('asset-group-cards');
+            target.innerHTML = '';
+            (Array.isArray(groups) ? groups : []).forEach((group) => {
+                const article = document.createElement('article');
+                article.className = 'rounded-3xl border border-white/10 bg-white/5 p-5';
+                const instruments = Array.isArray(group.instruments) ? group.instruments : [];
+                const instrumentHtml = instruments.map(item => `
+                    <div class="rounded-2xl border border-white/5 bg-slate-950/30 p-4">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <div class="text-xs uppercase tracking-[0.16em] text-slate-500">${item.label || item.id || '资产'}</div>
+                                <div class="mt-2 text-xl font-bold text-white">${item.current || '数据待补'}</div>
+                            </div>
+                            <span class="chip rounded-full px-3 py-1 text-[11px] text-slate-200">${item.state || '数据待补'}</span>
+                        </div>
+                        <div class="mt-3 grid grid-cols-3 gap-2 text-xs text-slate-300">
+                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">日 ${item.day || '数据待补'}</div>
+                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">周 ${item.week || '数据待补'}</div>
+                            <div class="rounded-xl border border-white/5 bg-white/5 px-2 py-2">月 ${item.month || '数据待补'}</div>
+                        </div>
+                        <p class="mt-3 text-sm leading-6 text-slate-200">${item.interpretation || '暂无解读。'}</p>
+                    </div>
+                `).join('');
+                article.innerHTML = `
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <div class="text-xs uppercase tracking-[0.16em] text-slate-500">${group.id || 'group'}</div>
+                            <h3 class="mt-2 text-xl font-bold text-white">${group.title || '未命名分组'}</h3>
+                        </div>
+                        <span class="chip rounded-full px-3 py-1 text-xs text-slate-200">${instruments.length} 项</span>
+                    </div>
+                    <p class="mt-4 text-sm leading-7 text-slate-200">${group.summary || '暂无短解读。'}</p>
+                    <div class="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">${instrumentHtml || '<div class="text-sm italic text-slate-500">暂无分组数据</div>'}</div>
+                `;
+                target.appendChild(article);
+            });
+        }
+
+        function renderRelationshipSignals(items) {
+            const target = $('relationship-signals');
+            target.innerHTML = '';
+            const badgeClass = {
+                aligned: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-200',
+                divergent: 'border-amber-500/20 bg-amber-500/10 text-amber-200',
+                partial: 'border-slate-500/20 bg-slate-500/10 text-slate-300'
+            };
+            (Array.isArray(items) ? items : []).forEach((item) => {
+                const article = document.createElement('article');
+                article.className = 'rounded-2xl border border-white/5 bg-white/5 px-4 py-4';
+                const badge = badgeClass[item.status] || badgeClass.partial;
+                article.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <h3 class="text-base font-bold text-white">${item.title || '关系信号'}</h3>
+                        <span class="rounded-full border px-3 py-1 text-[11px] ${badge}">${item.status || 'partial'}</span>
+                    </div>
+                    <p class="mt-3 text-sm leading-7 text-slate-200">${item.summary || '暂无关系说明。'}</p>
+                `;
+                target.appendChild(article);
+            });
+        }
+
+        function renderSections(sections) {
+            const container = $('sections-list');
+            container.innerHTML = '';
+            (Array.isArray(sections) ? sections : []).forEach((section) => {
+                const article = document.createElement('article');
+                article.className = 'rounded-3xl border border-white/10 bg-white/5 p-5';
+                article.innerHTML = `
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <h3 class="text-xl font-bold text-white">${section.title || '未命名模块'}</h3>
+                        <span class="chip rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-slate-300">${section.id || 'section'}</span>
+                    </div>
+                    <div class="whitespace-pre-wrap leading-8 text-slate-200">${section.content || '本模块缺失'}</div>
+                `;
+                container.appendChild(article);
+            });
+        }
+
         function renderMissing(meta, dashboard) {
             const hasMissing = (meta.missing_modules && meta.missing_modules.length) || (dashboard.missing_items && dashboard.missing_items.length);
             if (!hasMissing) return;
@@ -275,7 +973,7 @@
             appendChips('missing-modules', meta.missing_modules || [], '暂无');
             const list = $('missing-items');
             list.innerHTML = '';
-            (dashboard.missing_items || []).forEach(item => {
+            (dashboard.missing_items || []).forEach((item) => {
                 const li = document.createElement('li');
                 li.className = 'rounded-2xl border border-white/5 bg-white/5 px-4 py-3';
                 li.textContent = item.reason ? `${item.label}: ${item.reason}` : item.label;
@@ -283,7 +981,7 @@
             });
             if (!dashboard.missing_items || dashboard.missing_items.length === 0) {
                 const li = document.createElement('li');
-                li.className = 'text-sm text-slate-500 italic';
+                li.className = 'text-sm italic text-slate-500';
                 li.textContent = '暂无缺失明细';
                 list.appendChild(li);
             }
@@ -292,21 +990,36 @@
         function render() {
             const meta = DASHBOARD_DATA.meta || {};
             const dashboard = DASHBOARD_DATA.dashboard || {};
+            const header = dashboard.header || {};
+            const eventFooter = dashboard.event_footer || {};
 
             $('page-title').textContent = dashboard.title || '每日市场看板';
             $('page-subtitle').textContent = dashboard.subtitle || '';
-            $('meta-run-date').textContent = meta.run_date || '-';
-            $('meta-generated-at').textContent = meta.generated_at || '-';
+            $('meta-run-date').textContent = header.run_date || meta.run_date || '-';
+            $('meta-generated-at').textContent = header.generated_at || meta.generated_at || '-';
+            $('meta-timezone').textContent = header.timezone || '-';
+            $('market-label').textContent = header.market_label || '-';
             $('market-regime').textContent = dashboard.market_regime || 'mixed';
-            $('market-summary').textContent = dashboard.summary || '暂无摘要';
+            $('market-summary').textContent = header.summary || dashboard.summary || '暂无摘要';
+            $('confidence-value').textContent = header.confidence_pct || '0%';
+            $('evidence-count').textContent = String(header.evidence_count || 0);
 
+            renderNav();
             renderBanner(meta);
+            renderOverview(dashboard.overview_grid || []);
+            renderDriverPanels(dashboard.driver_panels || []);
+            renderAssetGroups(dashboard.asset_group_cards || []);
+            renderRelationshipSignals(dashboard.relationship_signals || []);
             renderSections(dashboard.sections || []);
+
+            appendList('macro-events', eventFooter.macro_events || [], '暂无宏观事件');
+            appendList('event-anomalies', eventFooter.anomalies || [], '暂无异常背离');
+            appendList('tomorrow-watch', eventFooter.tomorrow_watch || [], '暂无明日关注');
             appendList('key-points', dashboard.key_points || [], '暂无关键驱动');
             appendList('risks', dashboard.risks || [], '暂无风险提示');
             appendList('watch-items', dashboard.watch_items || [], '暂无观察点');
+            appendList('signals', dashboard.signals || [], '暂无快照信号');
             appendList('limitations', dashboard.limitations || [], '暂无限制说明');
-            appendList('signals', dashboard.signals || [], '暂无异常信号');
             appendChips('sources', dashboard.sources || [], '暂无数据源');
             renderMissing(meta, dashboard);
         }
