@@ -234,9 +234,9 @@
     <script>
         const DASHBOARD_DATA = {
   "meta": {
-    "run_id": "20260507-fdb-manual-verify-001-dashboard",
+    "run_id": "20260507-fdb-futuresfix-rerun-001-dashboard",
     "run_date": "2026-05-07",
-    "generated_at": "2026-05-07T09:44:38+08:00",
+    "generated_at": "2026-05-07T22:32:41+08:00",
     "publish_status": "degraded",
     "warnings": [
       "liquidity_risk 状态 degraded",
@@ -248,30 +248,30 @@
     "operator_notice": "当前页面为降级发布版本，请优先关注缺失项、延迟行情和滞后补源。"
   },
   "dashboard": {
-    "title": "风险偏强但降级",
+    "title": "风险偏强但口径降级",
     "subtitle": "让人 1 分钟内看明白今天市场在交易什么",
-    "summary": "风险资产表现偏强，但由于宏观补源缺失、数据质量降级和部分核心行情延迟，暂不能下强结论。当前更合理的判断是：金融条件边际宽松支撑risk-on反弹，但商品与数据口径仍显示分化。",
+    "summary": "风险资产偏强，但暂不能下完整 risk-on 结论；宏观补源、Fed path、宏观事件缺失，且油价大跌与黄金上涨并存，当前更合理的定性是“流动性支撑下的分化偏强”。",
     "market_regime": "mixed",
     "header": {
       "run_date": "2026-05-07",
-      "generated_at": "2026-05-07T09:43:21.094286+08:00",
+      "generated_at": "2026-05-07T22:31:31.678219+08:00",
       "timezone": "Asia/Shanghai",
       "market_label": "分化",
-      "summary": "风险资产和中国科技资产表现偏强，金融条件边际改善；但宏观补源缺失、数据质量降级，且商品端出现铜强油弱金稳的分化，暂不能下强结论。",
-      "confidence": 0.58,
-      "confidence_pct": "58%",
+      "summary": "金融条件边际宽松，权益和科技主线偏强；但油价大跌、黄金上涨、宏观补源缺失，使结论只能定性为分化偏强。",
+      "confidence": 0.62,
+      "confidence_pct": "62%",
       "evidence_count": 18
     },
     "overview_grid": [
       {
         "id": "SPX",
         "label": "标普500",
-        "current": "7,365.11",
-        "day": "+1.46%",
-        "week": "+3.27%",
-        "month": "+11.8%",
+        "current": "7,371.24",
+        "day": "+0.08%",
+        "week": "+2.83%",
+        "month": "+11.65%",
         "state": "testing_1m_high",
-        "interpretation": "**美债压力边际缓和**：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。",
+        "interpretation": "宏观补源缺失，原因是 macro_supplement_timeout。",
         "day_direction": "up",
         "week_direction": "up",
         "month_direction": "up",
@@ -281,10 +281,10 @@
       {
         "id": "NDX",
         "label": "纳斯达克100",
-        "current": "28,599.17",
-        "day": "+2.08%",
-        "week": "+5.65%",
-        "month": "+18.46%",
+        "current": "28,714.68",
+        "day": "+0.4%",
+        "week": "+5.07%",
+        "month": "+19.1%",
         "state": "testing_1m_high",
         "interpretation": "纳斯达克100 当前 testing_1m_high。",
         "day_direction": "up",
@@ -296,12 +296,12 @@
       {
         "id": "US10Y",
         "label": "美国10年期国债收益率",
-        "current": "4.344%",
-        "day": "-0.8bp",
-        "week": "-7.8bp",
-        "month": "+0.5bp",
+        "current": "4.342%",
+        "day": "-1.0bp",
+        "week": "-8.0bp",
+        "month": "+0.3bp",
         "state": "区间震荡",
-        "interpretation": "**美债压力边际缓和**：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。",
+        "interpretation": "美国10年期国债收益率为 4.342%，日内 -1.0bp，周度 -8.0bp。",
         "day_direction": "up",
         "week_direction": "up",
         "month_direction": "down",
@@ -311,12 +311,12 @@
       {
         "id": "US2Y",
         "label": "美国2年期国债收益率",
-        "current": "3.863%",
-        "day": "-0.7bp",
-        "week": "-7.0bp",
-        "month": "+0.9bp",
+        "current": "3.857%",
+        "day": "-1.3bp",
+        "week": "-7.6bp",
+        "month": "+0.3bp",
         "state": "区间震荡",
-        "interpretation": "**美债压力边际缓和**：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。",
+        "interpretation": "美国10年期国债收益率为 4.342%，日内 -1.0bp，周度 -8.0bp。",
         "day_direction": "up",
         "week_direction": "up",
         "month_direction": "down",
@@ -326,12 +326,12 @@
       {
         "id": "DXY",
         "label": "美元指数",
-        "current": "97.91",
-        "day": "-0.11%",
-        "week": "-0.96%",
-        "month": "-2.11%",
+        "current": "97.88",
+        "day": "-0.14%",
+        "week": "-0.99%",
+        "month": "-2.13%",
         "state": "区间震荡",
-        "interpretation": "**美债压力边际缓和**：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。",
+        "interpretation": "宏观补源缺失，原因是 macro_supplement_timeout。",
         "day_direction": "down",
         "week_direction": "down",
         "month_direction": "down",
@@ -341,12 +341,12 @@
       {
         "id": "Gold",
         "label": "黄金",
-        "current": "4,714.76",
-        "day": "+0.52%",
-        "week": "+3.76%",
-        "month": "+1.2%",
+        "current": "4,758.14",
+        "day": "+1.45%",
+        "week": "+4.71%",
+        "month": "+2.13%",
         "state": "区间震荡",
-        "interpretation": "本次只使用analysis_input.json事实，未做额外抓取、未调用RAG。",
+        "interpretation": "宏观补源缺失，原因是 macro_supplement_timeout。",
         "day_direction": "up",
         "week_direction": "up",
         "month_direction": "up",
@@ -356,25 +356,25 @@
       {
         "id": "WTI",
         "label": "WTI原油",
-        "current": "95.61",
-        "day": "+0.56%",
-        "week": "-12.34%",
-        "month": "-15.1%",
+        "current": "90.7",
+        "day": "-7.03%",
+        "week": "-16.84%",
+        "month": "-19.46%",
         "state": "区间震荡",
-        "interpretation": "本次只使用analysis_input.json事实，未做额外抓取、未调用RAG。",
-        "day_direction": "up",
+        "interpretation": "宏观补源缺失，原因是 macro_supplement_timeout。",
+        "day_direction": "down",
         "week_direction": "down",
         "month_direction": "down",
-        "tone": "bullish",
-        "tone_label": "偏多"
+        "tone": "bearish",
+        "tone_label": "偏空"
       },
       {
         "id": "BTC",
         "label": "比特币",
-        "current": "81,256.5",
-        "day": "-0.22%",
-        "week": "+7.27%",
-        "month": "+18.01%",
+        "current": "80,419.34",
+        "day": "-1.25%",
+        "week": "+6.16%",
+        "month": "+16.8%",
         "state": "区间震荡",
         "interpretation": "比特币 当前 区间震荡。",
         "day_direction": "down",
@@ -386,67 +386,67 @@
       {
         "id": "VIX",
         "label": "美股波动率指数",
-        "current": "17.39",
-        "day": "+0.06%",
-        "week": "-2.47%",
-        "month": "-30.24%",
+        "current": "17.17",
+        "day": "-1.27%",
+        "week": "-8.08%",
+        "month": "-31.57%",
         "state": "区间震荡",
-        "interpretation": "**美债压力边际缓和**：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。",
-        "day_direction": "down",
+        "interpretation": "宏观补源缺失，原因是 macro_supplement_timeout。",
+        "day_direction": "up",
         "week_direction": "up",
         "month_direction": "up",
-        "tone": "bearish",
-        "tone_label": "偏空"
+        "tone": "bullish",
+        "tone_label": "偏多"
       }
     ],
     "driver_panels": [
       {
-        "id": "financial_conditions",
+        "id": "liquidity",
         "title": "金融条件",
-        "verdict": "边际宽松，支持风险偏好修复。",
+        "verdict": "美元与美债收益率回落，对风险资产形成支撑。",
         "evidence": [
-          "US10Y 4.344%，日内-0.8bp，周度-7.8bp。",
-          "US2Y 3.863%，日内-0.7bp，周度-7.0bp。",
-          "DXY 97.906，日内-0.11%，周度-0.96%，月度-2.11%。",
-          "VIX 17.39，周度-2.47%，月度-30.24%，volatility_regime为contained。"
+          "US10Y 日内 -1.0bp，周度 -8.0bp。",
+          "US2Y 日内 -1.3bp，周度 -7.6bp。",
+          "DXY 日内 -0.14%，周度 -0.99%，月度 -2.13%。",
+          "VIX 17.17，周度 -8.08%，月度 -31.57%，但为 delayed_streaming_900。"
         ],
-        "short_comment": "利率和美元都没有给风险资产施压，VIX也处于受控状态。但VIX延迟900秒，实时性需要打折。"
+        "short_comment": "流动性方向偏友好，但宏观补源和 Fed path 缺失，无法确认利率回落背后的宏观含义。"
       },
       {
         "id": "risk_assets",
         "title": "风险资产",
-        "verdict": "美股科技明显偏强，指数测试1个月高点。",
+        "verdict": "美股和科技权重顶住压力，风险偏好集中在权益科技方向。",
         "evidence": [
-          "SPX日内+1.46%，周度+3.27%，月度+11.8%，testing_1m_high。",
-          "NDX日内+2.08%，周度+5.65%，月度+18.46%，testing_1m_high。",
-          "NVDA日内+5.77%，月度+17.32%，触发日波动超过4%警报。",
-          "BTC周度+7.27%，月度+18.01%，仍在20日线上方。"
+          "SPX 月度 +11.65%，测试1个月高点。",
+          "NDX 月度 +19.10%，测试1个月高点。",
+          "NVDA 日内 +2.73%，月度 +21.50%。",
+          "BTC 日内 -1.25%，但月度 +16.80%。"
         ],
-        "short_comment": "风险资产端是本次最强证据，但NVDA周度仍为-2.29%，且NDX为延迟数据，需观察持续性。"
+        "short_comment": "权益主线明显强于加密日内表现，风险偏好不是全面扩散，而是结构性偏强。"
       },
       {
         "id": "commodities",
-        "title": "商品验证",
-        "verdict": "商品信号分化，不能确认全面增长交易。",
+        "title": "商品链条",
+        "verdict": "商品内部严重分化，不能给出单一增长或通胀结论。",
         "evidence": [
-          "Copper日内+0.12%，周度+4.65%，月度+9.93%，趋势在20日线上方。",
-          "WTI日内+0.56%，但周度-12.34%，月度-15.1%，触发周度大跌警报。",
-          "Gold日内+0.52%，周度+3.76%，月度+1.2%。",
-          "Silver缺失，商品链条不完整。"
+          "WTI 日内 -7.03%，周度 -16.84%，月度 -19.46%。",
+          "Copper 日内 +0.34%，周度 +4.88%，月度 +10.17%。",
+          "Gold 日内 +1.45%，周度 +4.71%。",
+          "Silver 缺失。"
         ],
-        "short_comment": "铜支持增长，原油明显拖后腿，黄金仍有防御属性；这是一组分化信号。"
+        "short_comment": "铜强、油弱、金强并存，说明当前不是单线条的通胀或增长交易。"
       },
       {
         "id": "china_assets",
         "title": "中国资产",
-        "verdict": "港股与人民币端同步偏强，但口径需降权。",
+        "verdict": "optional 快照显示港股和人民币偏强，但口径需降权。",
         "evidence": [
-          "HSI日内+1.46%，周度+2.26%，月度+5.31%，位于20日线上方。",
-          "HSTECH日内+2.58%，周度+4.52%，月度+7.7%，位于20日线上方。",
-          "USDCNH 6.8028，日内-0.15%，周度-0.65%，月度-1.03%，testing_1m_low。",
-          "missing中仍标记USDCNH、HSI、HSTECH缺失，但optional中存在对应数据。"
+          "USDCNH 日内 -0.22%，测试1个月低点。",
+          "HSI 日内 +1.57%，月度 +5.43%。",
+          "HSTECH 日内 +3.06%，周度 +5.01%。",
+          "missing 中同时标记 USDCNH、HSI、HSTECH 缺失。"
         ],
-        "short_comment": "从可见optional数据看，中国资产跟上了全球风险偏好；但输入模块映射不一致，不能过度解读。"
+        "short_comment": "若以 optional 快照观察，中国资产跟上；但主模块缺失标记使该判断不能作为高置信主线。"
       }
     ],
     "asset_group_cards": [
@@ -458,10 +458,10 @@
           {
             "id": "SPX",
             "label": "标普500",
-            "current": "7,365.11",
-            "day": "+1.46%",
-            "week": "+3.27%",
-            "month": "+11.8%",
+            "current": "7,371.24",
+            "day": "+0.08%",
+            "week": "+2.83%",
+            "month": "+11.65%",
             "state": "testing_1m_high",
             "interpretation": "标普500 当前 testing_1m_high。",
             "day_direction": "up",
@@ -473,10 +473,10 @@
           {
             "id": "NDX",
             "label": "纳斯达克100",
-            "current": "28,599.17",
-            "day": "+2.08%",
-            "week": "+5.65%",
-            "month": "+18.46%",
+            "current": "28,714.68",
+            "day": "+0.4%",
+            "week": "+5.07%",
+            "month": "+19.1%",
             "state": "testing_1m_high",
             "interpretation": "纳斯达克100 当前 testing_1m_high。",
             "day_direction": "up",
@@ -488,25 +488,25 @@
           {
             "id": "VIX",
             "label": "美股波动率指数",
-            "current": "17.39",
-            "day": "+0.06%",
-            "week": "-2.47%",
-            "month": "-30.24%",
+            "current": "17.17",
+            "day": "-1.27%",
+            "week": "-8.08%",
+            "month": "-31.57%",
             "state": "区间震荡",
             "interpretation": "美股波动率指数 当前 区间震荡。",
-            "day_direction": "down",
+            "day_direction": "up",
             "week_direction": "up",
             "month_direction": "up",
-            "tone": "bearish",
-            "tone_label": "偏空"
+            "tone": "bullish",
+            "tone_label": "偏多"
           },
           {
             "id": "BTC",
             "label": "比特币",
-            "current": "81,256.5",
-            "day": "-0.22%",
-            "week": "+7.27%",
-            "month": "+18.01%",
+            "current": "80,419.34",
+            "day": "-1.25%",
+            "week": "+6.16%",
+            "month": "+16.8%",
             "state": "区间震荡",
             "interpretation": "比特币 当前 区间震荡。",
             "day_direction": "down",
@@ -516,8 +516,8 @@
             "tone_label": "偏空"
           }
         ],
-        "tone": "neutral",
-        "tone_label": "中性"
+        "tone": "bullish",
+        "tone_label": "偏多"
       },
       {
         "id": "equity_structure",
@@ -527,10 +527,10 @@
           {
             "id": "SPX",
             "label": "标普500",
-            "current": "7,365.11",
-            "day": "+1.46%",
-            "week": "+3.27%",
-            "month": "+11.8%",
+            "current": "7,371.24",
+            "day": "+0.08%",
+            "week": "+2.83%",
+            "month": "+11.65%",
             "state": "testing_1m_high",
             "interpretation": "标普500 当前 testing_1m_high。",
             "day_direction": "up",
@@ -542,10 +542,10 @@
           {
             "id": "NDX",
             "label": "纳斯达克100",
-            "current": "28,599.17",
-            "day": "+2.08%",
-            "week": "+5.65%",
-            "month": "+18.46%",
+            "current": "28,714.68",
+            "day": "+0.4%",
+            "week": "+5.07%",
+            "month": "+19.1%",
             "state": "testing_1m_high",
             "interpretation": "纳斯达克100 当前 testing_1m_high。",
             "day_direction": "up",
@@ -557,14 +557,14 @@
           {
             "id": "NVDA",
             "label": "英伟达",
-            "current": "207.83",
-            "day": "+5.77%",
-            "week": "-2.29%",
-            "month": "+17.32%",
+            "current": "213.5",
+            "day": "+2.73%",
+            "week": "+1.7%",
+            "month": "+21.5%",
             "state": "区间震荡",
             "interpretation": "英伟达 当前 区间震荡。",
             "day_direction": "up",
-            "week_direction": "down",
+            "week_direction": "up",
             "month_direction": "up",
             "tone": "bullish",
             "tone_label": "偏多"
@@ -581,10 +581,10 @@
           {
             "id": "US2Y",
             "label": "美国2年期国债收益率",
-            "current": "3.863%",
-            "day": "-0.7bp",
-            "week": "-7.0bp",
-            "month": "+0.9bp",
+            "current": "3.857%",
+            "day": "-1.3bp",
+            "week": "-7.6bp",
+            "month": "+0.3bp",
             "state": "区间震荡",
             "interpretation": "美国2年期国债收益率 当前 区间震荡。",
             "day_direction": "up",
@@ -596,10 +596,10 @@
           {
             "id": "US10Y",
             "label": "美国10年期国债收益率",
-            "current": "4.344%",
-            "day": "-0.8bp",
-            "week": "-7.8bp",
-            "month": "+0.5bp",
+            "current": "4.342%",
+            "day": "-1.0bp",
+            "week": "-8.0bp",
+            "month": "+0.3bp",
             "state": "区间震荡",
             "interpretation": "美国10年期国债收益率 当前 区间震荡。",
             "day_direction": "up",
@@ -611,17 +611,17 @@
           {
             "id": "2Y10Y Spread",
             "label": "10Y-2Y利差",
-            "current": "+48.1bp",
-            "day": "-0.1bp",
-            "week": "-0.8bp",
-            "month": "-0.4bp",
+            "current": "+48.5bp",
+            "day": "+0.3bp",
+            "week": "-0.4bp",
+            "month": "-0.0bp",
             "state": "positive",
             "interpretation": "10Y-2Y利差 当前 positive。",
-            "day_direction": "down",
+            "day_direction": "up",
             "week_direction": "down",
-            "month_direction": "down",
-            "tone": "bearish",
-            "tone_label": "偏空"
+            "month_direction": "flat",
+            "tone": "bullish",
+            "tone_label": "偏多"
           }
         ],
         "tone": "bullish",
@@ -635,10 +635,10 @@
           {
             "id": "DXY",
             "label": "美元指数",
-            "current": "97.91",
-            "day": "-0.11%",
-            "week": "-0.96%",
-            "month": "-2.11%",
+            "current": "97.88",
+            "day": "-0.14%",
+            "week": "-0.99%",
+            "month": "-2.13%",
             "state": "区间震荡",
             "interpretation": "美元指数 当前 区间震荡。",
             "day_direction": "down",
@@ -650,10 +650,10 @@
           {
             "id": "USDJPY",
             "label": "美元兑日元",
-            "current": "156.03",
-            "day": "-0.21%",
-            "week": "-2.75%",
-            "month": "-2.29%",
+            "current": "156.34",
+            "day": "-0.01%",
+            "week": "-2.55%",
+            "month": "-2.09%",
             "state": "区间震荡",
             "interpretation": "美元兑日元 当前 区间震荡。",
             "day_direction": "down",
@@ -665,10 +665,10 @@
           {
             "id": "EURUSD",
             "label": "欧元兑美元",
-            "current": "1.176",
-            "day": "+0.12%",
-            "week": "+0.73%",
-            "month": "+1.92%",
+            "current": "1.177",
+            "day": "+0.19%",
+            "week": "+0.8%",
+            "month": "+1.99%",
             "state": "区间震荡",
             "interpretation": "欧元兑美元 当前 区间震荡。",
             "day_direction": "up",
@@ -680,10 +680,10 @@
           {
             "id": "USDCNH",
             "label": "美元兑离岸人民币",
-            "current": "6.803",
-            "day": "-0.15%",
-            "week": "-0.65%",
-            "month": "-1.03%",
+            "current": "6.798",
+            "day": "-0.22%",
+            "week": "-0.72%",
+            "month": "-1.1%",
             "state": "testing_1m_low",
             "interpretation": "美元兑离岸人民币 当前 testing_1m_low。",
             "day_direction": "down",
@@ -719,10 +719,10 @@
           {
             "id": "Gold",
             "label": "黄金",
-            "current": "4,714.76",
-            "day": "+0.52%",
-            "week": "+3.76%",
-            "month": "+1.2%",
+            "current": "4,758.14",
+            "day": "+1.45%",
+            "week": "+4.71%",
+            "month": "+2.13%",
             "state": "区间震荡",
             "interpretation": "黄金 当前 区间震荡。",
             "day_direction": "up",
@@ -734,25 +734,25 @@
           {
             "id": "WTI",
             "label": "WTI原油",
-            "current": "95.61",
-            "day": "+0.56%",
-            "week": "-12.34%",
-            "month": "-15.1%",
+            "current": "90.7",
+            "day": "-7.03%",
+            "week": "-16.84%",
+            "month": "-19.46%",
             "state": "区间震荡",
             "interpretation": "WTI原油 当前 区间震荡。",
-            "day_direction": "up",
+            "day_direction": "down",
             "week_direction": "down",
             "month_direction": "down",
-            "tone": "bullish",
-            "tone_label": "偏多"
+            "tone": "bearish",
+            "tone_label": "偏空"
           },
           {
             "id": "Copper",
             "label": "铜价",
-            "current": "6.115",
-            "day": "+0.12%",
-            "week": "+4.65%",
-            "month": "+9.93%",
+            "current": "6.129",
+            "day": "+0.34%",
+            "week": "+4.88%",
+            "month": "+10.17%",
             "state": "区间震荡",
             "interpretation": "铜价 当前 区间震荡。",
             "day_direction": "up",
@@ -773,10 +773,10 @@
           {
             "id": "BTC",
             "label": "比特币",
-            "current": "81,256.5",
-            "day": "-0.22%",
-            "week": "+7.27%",
-            "month": "+18.01%",
+            "current": "80,419.34",
+            "day": "-1.25%",
+            "week": "+6.16%",
+            "month": "+16.8%",
             "state": "区间震荡",
             "interpretation": "比特币 当前 区间震荡。",
             "day_direction": "down",
@@ -788,10 +788,10 @@
           {
             "id": "HSI",
             "label": "恒生指数",
-            "current": "26,596.03",
-            "day": "+1.46%",
-            "week": "+2.26%",
-            "month": "+5.31%",
+            "current": "26,626.28",
+            "day": "+1.57%",
+            "week": "+2.38%",
+            "month": "+5.43%",
             "state": "区间震荡",
             "interpretation": "恒生指数 当前 区间震荡。",
             "day_direction": "up",
@@ -803,10 +803,10 @@
           {
             "id": "HSTECH",
             "label": "恒生科技指数",
-            "current": "5,097.18",
-            "day": "+2.58%",
-            "week": "+4.52%",
-            "month": "+7.7%",
+            "current": "5,121.1",
+            "day": "+3.06%",
+            "week": "+5.01%",
+            "month": "+8.2%",
             "state": "区间震荡",
             "interpretation": "恒生科技指数 当前 区间震荡。",
             "day_direction": "up",
@@ -845,9 +845,9 @@
       {
         "id": "btc_vs_vix",
         "title": "BTC vs VIX",
-        "status": "aligned",
-        "status_label": "共振",
-        "summary": "两者当日同向变化，说明当前叙事存在共振。"
+        "status": "divergent",
+        "status_label": "背离",
+        "summary": "两者当日出现背离，说明当前叙事值得重点跟踪。"
       },
       {
         "id": "hsi_vs_hstech",
@@ -859,117 +859,118 @@
     ],
     "event_footer": {
       "macro_events": [
-        "宏观补源未并入主快照，原因为macro_supplement_timeout。",
-        "macro_events缺失。",
-        "fed_path缺失。"
+        "macro_events 缺失。",
+        "fed_path 缺失。",
+        "宏观补源状态 missing，原因 macro_supplement_timeout。",
+        "quality.overall_status=degraded。"
       ],
       "anomalies": [
-        "WTI周度-12.34%、月度-15.1%，与美股科技强势背离。",
-        "Gold日内+0.52%、周度+3.76%，与risk-on并存。",
-        "NVDA日内+5.77%，但周度-2.29%。",
-        "missing中标记USDCNH、HSI、HSTECH缺失，但optional中有数据。"
+        "WTI 日内 -7.03%，周度 -16.84%，触发日波动和周波动异常。",
+        "NDX 测试1个月高点。",
+        "SPX 测试1个月高点。",
+        "USDCNH 测试1个月低点，但存在 missing 与 optional 口径冲突。"
       ],
       "tomorrow_watch": [
-        "SPX、NDX是否有效站稳1个月高点。",
-        "WTI是否止跌，铜油背离是否收敛。",
-        "DXY与USDCNH是否延续弱美元、强人民币结构。",
-        "宏观补源链路是否恢复，macro_events和fed_path能否补齐。"
+        "美股高点测试是否延续。",
+        "WTI 大跌是否扩散为周期压力。",
+        "黄金上涨是否继续强化避险或美元利率回落逻辑。",
+        "港股科技和人民币强势是否获得持续确认。"
       ]
     },
     "module_cards": [
       {
         "id": "one_sentence_conclusion",
         "title": "一句话结论",
-        "summary": "盘面偏风险偏好修复，但因宏观补源缺失、部分行情延迟和关键模块降级，只能给出“风险资产强、结论置信度中低”的判断，暂不能下强结论。 美债收益率小幅回落、美元走弱、VIX受控，为美股科技和港股科技反弹提供了较友好的金融条件；但原油周/月维度大…"
+        "summary": "风险资产表现偏强，美股、港股、科技方向顶住压力，美元与美债收益率回落形成流动性支撑；但宏观补源缺失、多个关键模块 degraded，且油价大跌与黄金上涨并存，结论只能定性为“偏强但分化”，不能上升为完整 risk-on 判断。"
       },
       {
         "id": "financial_conditions_liquidity",
         "title": "核心驱动：金融条件与流动性",
-        "summary": "美债压力边际缓和：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。 曲线稳定但未给出新方向：10Y-2Y利差48.1bp，日内-0.1bp，曲线为正…"
+        "summary": "美国10年期国债收益率为 4.342%，日内 -1.0bp，周度 -8.0bp。 美国2年期国债收益率为 3.857%，日内 -1.3bp，周度 -7.6bp。"
       },
       {
-        "id": "risk_assets_mapping",
+        "id": "risk_asset_mapping",
         "title": "风险资产映射：市场有没有顶住压力",
-        "summary": "美股核心指数明显顶住压力：标普500日内+1.46%，周度+3.27%，月度+11.8%，位于20日线上方并测试1个月高点。 科技权重更强：纳斯达克100日内+2.08%，周度+5.65%，月度+18.46%，同样测试1个月高点。"
+        "summary": "标普500为 7371.24，日内 +0.08%，周度 +2.83%，月度 +11.65%，位于 20日线上方，并在测试1个月高点。 纳斯达克100为 28714.6827，日内 +0.40%，周度 +5.07%，月度 +19.10%，位…"
       },
       {
         "id": "commodity_validation",
         "title": "商品验证：增长、通胀还是避险",
-        "summary": "铜偏增长验证：铜价日内+0.12%，周度+4.65%，月度+9.93%，位于20日线上方，说明增长/工业需求预期仍有支撑。 原油给出反向信号：WTI日内+0.56%，但周度-12.34%、月度-15.1%，这是商品内部最明显的压力项，且触…"
+        "summary": "WTI 原油 90.7，日内 -7.03%，周度 -16.84%，月度 -19.46%，跌破 20日线，并触发日波动超过3%、周波动超过6%的异常提示；该数据为 delayed_streaming_600。 铜价 6.1287，日内 +0…"
       },
       {
-        "id": "regional_divergence_china_assets",
+        "id": "regional_divergence_china",
         "title": "区域分化：中国资产是否跟上",
-        "summary": "港股跟上全球风险偏好：恒生指数日内+1.46%，周度+2.26%，月度+5.31%，位于20日线上方。 港股科技弹性更强：恒生科技指数日内+2.58%，周度+4.52%，月度+7.7%，同样位于20日线上方。"
+        "summary": "离岸人民币 USDCNH 为 6.798，日内 -0.22%，周度 -0.72%，月度 -1.10%，正在测试1个月低点，人民币相对走强；但输入的 missing 中同时标记 USDCNH 缺失，需以口径降级处理。 恒生指数为 26626…"
       },
       {
         "id": "top_3_watch_items",
         "title": "今日最关键的3个观察点",
-        "summary": "1. 美股能否守住1个月高点测试区：重点看SPX、NDX是否从“测试高点”转为有效突破，还是冲高回落。 2. 原油大跌是否继续拖累周期判断：WTI周度-12.34%、月度-15.1%，若继续弱于铜，说明商品端仍在否定全面增长交易。"
+        "summary": "1. 美股是否继续测试并有效突破 1个月高点，尤其是 NDX 与 SPX 的强势能否延续。 2. WTI 大跌后是否继续拖累通胀与周期品定价，还是被市场视为单一商品冲击。"
       },
       {
-        "id": "data_limitations_methodology",
+        "id": "data_limits_methodology",
         "title": "数据限制与口径",
-        "summary": "本次只使用analysis_input.json事实，未做额外抓取、未调用RAG。 数据质量为degraded，required_modules_ready=false，缺失项数量为10。"
+        "summary": "宏观补源缺失，原因是 macro_supplement_timeout。 macro_events 与 fed_path 缺失，因此不能判断当日宏观事件与政策路径变化。"
       }
     ],
     "sections": [
       {
         "id": "one_sentence_conclusion",
         "title": "一句话结论",
-        "content": "**盘面偏风险偏好修复，但因宏观补源缺失、部分行情延迟和关键模块降级，只能给出“风险资产强、结论置信度中低”的判断，暂不能下强结论。** 美债收益率小幅回落、美元走弱、VIX受控，为美股科技和港股科技反弹提供了较友好的金融条件；但原油周/月维度大跌与黄金上涨并存，说明增长、通胀和避险信号并不完全一致。"
+        "content": "风险资产表现偏强，美股、港股、科技方向顶住压力，美元与美债收益率回落形成流动性支撑；但宏观补源缺失、多个关键模块 degraded，且油价大跌与黄金上涨并存，结论只能定性为“偏强但分化”，不能上升为完整 risk-on 判断。"
       },
       {
         "id": "financial_conditions_liquidity",
         "title": "核心驱动：金融条件与流动性",
-        "content": "- **美债压力边际缓和**：美国10年期国债收益率4.344%，日内-0.8bp，周度-7.8bp；美国2年期收益率3.863%，日内-0.7bp，周度-7.0bp。\n- **曲线稳定但未给出新方向**：10Y-2Y利差48.1bp，日内-0.1bp，曲线为正且斜率稳定。\n- **美元走弱改善流动性环境**：DXY 97.906，日内-0.11%，周度-0.96%，月度-2.11%。\n- **波动率仍受控**：VIX 17.39，日内基本持平，周度-2.47%，月度-30.24%，处于contained状态；但VIX为900秒延迟数据，需降低实时判断权重。\n- **高Beta流动性资产仍强于日内表现**：BTC日内-0.22%，但周度+7.27%、月度+18.01%，仍在20日线上方。"
+        "content": "- 美国10年期国债收益率为 4.342%，日内 -1.0bp，周度 -8.0bp。\n- 美国2年期国债收益率为 3.857%，日内 -1.3bp，周度 -7.6bp。\n- 10Y-2Y 利差为 48.5bp，曲线为正，斜率状态稳定。\n- 美元指数 97.877，日内 -0.14%，周度 -0.99%，月度 -2.13%。\n- VIX 为 17.17，日内 -1.27%，周度 -8.08%，月度 -31.57%，波动率状态为 contained，但该数据为 delayed_streaming_900。\n\n综合看，利率和美元都在边际回落，VIX 也处于受控状态，金融条件对风险资产不是压力项，而是支撑项。但由于宏观补源和 Fed path 缺失，无法判断这轮利率回落来自增长担忧、政策预期变化，还是单纯交易性波动。"
       },
       {
-        "id": "risk_assets_mapping",
+        "id": "risk_asset_mapping",
         "title": "风险资产映射：市场有没有顶住压力",
-        "content": "- **美股核心指数明显顶住压力**：标普500日内+1.46%，周度+3.27%，月度+11.8%，位于20日线上方并测试1个月高点。\n- **科技权重更强**：纳斯达克100日内+2.08%，周度+5.65%，月度+18.46%，同样测试1个月高点。\n- **AI龙头弹性突出**：英伟达日内+5.77%，月度+17.32%，但周度仍为-2.29%，说明短线反弹很强，周内结构尚未完全修复。\n- **总体判断**：风险资产端给出的信号偏risk-on，但由于NDX为900秒延迟数据，且宏观补源缺失，不能把这次反弹直接上升为完整趋势确认。"
+        "content": "- 标普500为 7371.24，日内 +0.08%，周度 +2.83%，月度 +11.65%，位于 20日线上方，并在测试1个月高点。\n- 纳斯达克100为 28714.6827，日内 +0.40%，周度 +5.07%，月度 +19.10%，位于 20日线上方，并在测试1个月高点；但该数据为 delayed_streaming_900。\n- 英伟达为 213.4976，日内 +2.73%，周度 +1.70%，月度 +21.50%，位于 20日线上方。\n- 比特币为 80419.34，日内 -1.25%，但周度 +6.16%，月度 +16.80%，仍位于 20日线上方。\n\n风险资产整体顶住了压力，尤其是美股指数与 AI 权重方向维持强势。唯一需要降温的是，比特币日内回落，说明风险偏好并非无差别扩散，而是更集中在权益和科技主线。"
       },
       {
         "id": "commodity_validation",
         "title": "商品验证：增长、通胀还是避险",
-        "content": "- **铜偏增长验证**：铜价日内+0.12%，周度+4.65%，月度+9.93%，位于20日线上方，说明增长/工业需求预期仍有支撑。\n- **原油给出反向信号**：WTI日内+0.56%，但周度-12.34%、月度-15.1%，这是商品内部最明显的压力项，且触发周度大跌警报。\n- **黄金仍有防御属性**：黄金日内+0.52%，周度+3.76%，月度+1.2%，处于20日附近，显示避险或实际利率/美元走弱相关支撑仍在。\n- **综合判断**：商品不是单纯risk-on图景，更像“铜强、油弱、金稳”的分化组合；这限制了对增长再加速的确认力度。"
+        "content": "- WTI 原油 90.7，日内 -7.03%，周度 -16.84%，月度 -19.46%，跌破 20日线，并触发日波动超过3%、周波动超过6%的异常提示；该数据为 delayed_streaming_600。\n- 铜价 6.1287，日内 +0.34%，周度 +4.88%，月度 +10.17%，位于 20日线上方。\n- 黄金 4758.142，日内 +1.45%，周度 +4.71%，月度 +2.13%，位于 20日线上方。\n- 白银缺失。\n\n商品信号明显分化：铜强说明增长或工业需求定价并未崩；油价大跌则压低通胀交易、也可能反映能源端特殊冲击；黄金上涨说明避险或实际利率/美元回落逻辑仍在。该组合不是单纯增长通胀共振，更像“美元利率回落 + 风险资产强 + 商品内部剧烈分化”。"
       },
       {
-        "id": "regional_divergence_china_assets",
+        "id": "regional_divergence_china",
         "title": "区域分化：中国资产是否跟上",
-        "content": "- **港股跟上全球风险偏好**：恒生指数日内+1.46%，周度+2.26%，月度+5.31%，位于20日线上方。\n- **港股科技弹性更强**：恒生科技指数日内+2.58%，周度+4.52%，月度+7.7%，同样位于20日线上方。\n- **人民币端也偏支撑**：USDCNH 6.8028，日内-0.15%，周度-0.65%，月度-1.03%，正在测试1个月低点，意味着离岸人民币走强，对中国资产风险偏好有边际支撑。\n- **但需注意口径矛盾**：missing中仍标记HSI、HSTECH、USDCNH缺失，尽管optional里存在对应数据，因此区域判断只能基于optional快照，置信度需下调。"
+        "content": "- 离岸人民币 USDCNH 为 6.798，日内 -0.22%，周度 -0.72%，月度 -1.10%，正在测试1个月低点，人民币相对走强；但输入的 missing 中同时标记 USDCNH 缺失，需以口径降级处理。\n- 恒生指数为 26626.28，日内 +1.57%，周度 +2.38%，月度 +5.43%，位于 20日线上方；但 missing 中同时标记 HSI 缺失。\n- 恒生科技指数为 5121.1，日内 +3.06%，周度 +5.01%，月度 +8.20%，位于 20日线上方；但 missing 中同时标记 HSTECH 缺失。\n\n仅按快照中的 optional 数据看，中国资产跟上了全球风险偏强环境，且港股科技弹性更强，人民币也在走强。但由于这些资产在 missing 中仍被标记为缺失，说明主模块没有正式接入或口径不一致，本段只能作为辅助观察，不能作为高置信主结论。"
       },
       {
         "id": "top_3_watch_items",
         "title": "今日最关键的3个观察点",
-        "content": "1. **美股能否守住1个月高点测试区**：重点看SPX、NDX是否从“测试高点”转为有效突破，还是冲高回落。\n2. **原油大跌是否继续拖累周期判断**：WTI周度-12.34%、月度-15.1%，若继续弱于铜，说明商品端仍在否定全面增长交易。\n3. **美元与离岸人民币是否延续弱美元/强人民币组合**：DXY月度-2.11%，USDCNH测试1个月低点，这一组合若延续，有利于非美和中国资产。"
+        "content": "1. 美股是否继续测试并有效突破 1个月高点，尤其是 NDX 与 SPX 的强势能否延续。\n2. WTI 大跌后是否继续拖累通胀与周期品定价，还是被市场视为单一商品冲击。\n3. 港股科技与人民币走强能否持续，尤其是 HSTECH +3.06% 后是否继续获得资金确认。"
       },
       {
-        "id": "data_limitations_methodology",
+        "id": "data_limits_methodology",
         "title": "数据限制与口径",
-        "content": "- 本次只使用analysis_input.json事实，未做额外抓取、未调用RAG。\n- 数据质量为degraded，required_modules_ready=false，缺失项数量为10。\n- 宏观补源缺失：macro_supplement_timeout，macro_events与fed_path缺失，因此无法验证政策/宏观事件驱动。\n- Silver缺失，商品通胀链条不完整。\n- VIX、NDX为900秒延迟数据，WTI为600秒延迟数据，盘中实时判断需打折。\n- missing中标记USDJPY、USDCNH、HSI、HSTECH缺失，但optional中存在这些数据，说明输入口径存在模块映射不一致；相关结论只能作为辅助判断。"
+        "content": "- 宏观补源缺失，原因是 macro_supplement_timeout。\n- macro_events 与 fed_path 缺失，因此不能判断当日宏观事件与政策路径变化。\n- VIX、WTI、NDX 为延迟流数据，分别是 delayed_streaming_900、delayed_streaming_600、delayed_streaming_900。\n- inflation_cycle 缺少 Silver。\n- quality.overall_status 为 degraded，required_modules_ready=false。\n- missing 中标记了 USDJPY、USDCNH、HSI、HSTECH 等缺失，但 optional 区域又提供了对应快照，说明资产口径存在模块接入不一致，相关结论需要降权。\n- 本分析只基于 analysis_input.json，不做额外抓取、不调用 RAG。"
       }
     ],
     "key_points": [
-      "美债收益率周度回落、美元指数走弱，金融条件边际改善。",
-      "SPX、NDX测试1个月高点，NVDA日内大涨，风险资产端明显偏强。",
-      "铜强、油弱、金稳，商品信号分化，不能单纯解释为全面增长交易。",
-      "港股与港股科技同步上涨，USDCNH测试1个月低点，但中国资产相关数据存在optional/missing口径不一致。"
+      "美债收益率与美元同步回落，金融条件边际宽松。",
+      "SPX、NDX 测试1个月高点，NVDA 月度涨幅达 21.50%，科技主线强势。",
+      "WTI 日内 -7.03%、周度 -16.84%，商品内部出现显著异常。",
+      "港股与港股科技在 optional 快照中表现强，但主模块 missing 口径要求降权。"
     ],
     "risks": [
-      "数据质量为degraded，required_modules_ready=false，宏观补源未并入主快照。",
-      "VIX、NDX、WTI存在延迟，盘中实时信号置信度下降。",
-      "WTI周度和月度大跌，与风险资产走强形成背离。"
+      "宏观补源超时，macro_events 与 fed_path 缺失，政策与事件解释链不完整。",
+      "WTI 大跌可能反映能源端冲击或增长预期变化，不能被简单视为利好。",
+      "VIX、WTI、NDX 存在延迟流数据，盘中判断置信度下降。"
     ],
     "watch_items": [
-      "SPX、NDX能否有效突破并站稳1个月高点。",
-      "WTI是否继续弱于铜，验证周期信号是否继续分化。",
-      "DXY和USDCNH是否延续弱美元、强人民币组合。"
+      "SPX、NDX 能否延续测试1个月高点并形成有效突破。",
+      "WTI 大跌是否扩散到铜、权益或通胀预期。",
+      "人民币与港股科技强势能否持续确认。"
     ],
     "signals": [
-      "NVDA: 日波动超过4.0%",
-      "NDX: 日波动超过2.0%；测试1M高点",
-      "SPX: 测试1M高点"
+      "WTI: 日波动超过3.0%；周波动超过6.0%",
+      "NDX: 测试1M高点",
+      "USDCNH: 测试1M低点"
     ],
     "quality_signals": [
       "liquidity_risk 存在延迟行情：VIX",
@@ -981,11 +982,12 @@
       "WTI=delayed_streaming_600",
       "NDX=delayed_streaming_900",
       "宏观补源未并入主快照，请检查补源链路。",
-      "数据质量为degraded，required_modules_ready=false，结论置信度需下调。",
-      "宏观补源未并入主快照，macro_events与fed_path缺失，无法判断宏观/政策事件驱动。",
-      "Silver缺失，商品链条不完整。",
-      "VIX、NDX为900秒延迟数据，WTI为600秒延迟数据。",
-      "missing与optional存在口径不一致：USDJPY、USDCNH、HSI、HSTECH在missing中被标记缺失，但optional中有数据。"
+      "宏观补源未并入主快照，macro_supplement_timeout。",
+      "macro_events 与 fed_path 缺失，无法解释政策路径和事件驱动。",
+      "VIX、WTI、NDX 为延迟流数据，盘中置信度下降。",
+      "Silver 缺失，商品贵金属链条不完整。",
+      "USDCNH、HSI、HSTECH 在 optional 有快照但 missing 中仍被标记缺失，区域资产口径不一致。",
+      "quality.overall_status=degraded，required_modules_ready=false。"
     ],
     "sources": [
       "tradingview-screener"
