@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期权交易纪律卡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1f1428 0%, #080808 48%, #020202 100%);
+            color: #f5f5f5;
+            font-family: 'Noto Sans SC', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.045);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+        }
+        .rule-card {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+        }
+        .danger { border-left: 4px solid #ef4444; }
+        .priority { border-left: 4px solid #10b981; }
+        .question { border-left: 4px solid #8b5cf6; }
+        .warning-glow { text-shadow: 0 0 28px rgba(248, 113, 113, 0.45); }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-12">
+    <main class="max-w-6xl mx-auto">
+        <header class="mb-12 text-center">
+            <div class="text-xs md:text-sm uppercase tracking-[0.45em] text-red-300/80 font-bold mb-4">Options Discipline</div>
+            <h1 class="text-5xl md:text-7xl font-black warning-glow mb-5">期权交易纪律卡</h1>
+            <p class="text-lg md:text-2xl text-gray-300 leading-relaxed max-w-4xl mx-auto">
+                期权不是我的主盈利引擎。它只是防守、保险和结构化表达工具。
+            </p>
+        </header>
+
+        <section class="glass rounded-3xl p-8 md:p-10 mb-8">
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="rule-card rounded-2xl p-6">
+                    <div class="text-red-300 text-xs font-bold tracking-widest mb-3">NOT ENGINE</div>
+                    <div class="text-2xl font-black">不是主盈利引擎</div>
+                    <p class="text-gray-400 mt-3 text-sm leading-relaxed">不把期权搏杀当成复利来源。</p>
+                </div>
+                <div class="rule-card rounded-2xl p-6">
+                    <div class="text-amber-300 text-xs font-bold tracking-widest mb-3">ONLY TOOL</div>
+                    <div class="text-2xl font-black">只是表达工具</div>
+                    <p class="text-gray-400 mt-3 text-sm leading-relaxed">用于防守、保险和结构化表达。</p>
+                </div>
+                <div class="rule-card rounded-2xl p-6">
+                    <div class="text-emerald-300 text-xs font-bold tracking-widest mb-3">REAL EDGE</div>
+                    <div class="text-2xl font-black">优势不在短搏</div>
+                    <p class="text-gray-400 mt-3 text-sm leading-relaxed">优势是宏观周期、资产配置和仓位纪律。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-8 mb-8">
+            <div class="glass question rounded-3xl p-8">
+                <h2 class="text-2xl font-black text-purple-300 mb-6">下单前必须回答</h2>
+                <ol class="space-y-4 text-gray-200 leading-relaxed list-decimal list-inside">
+                    <li>这个观点为什么必须用期权表达？</li>
+                    <li>方向、幅度、时间、波动率是否同时匹配？</li>
+                    <li>如果横盘，我会亏多少？</li>
+                    <li>最大亏损是否已提前接受？</li>
+                    <li>失效条件和退出时间是否写清？</li>
+                    <li>这笔交易是否会重复押注同一个宏观风险？</li>
+                </ol>
+            </div>
+
+            <div class="glass danger rounded-3xl p-8">
+                <h2 class="text-2xl font-black text-red-300 mb-6">禁止</h2>
+                <ul class="space-y-4 text-gray-200 leading-relaxed">
+                    <li>为了便宜买远虚值期权</li>
+                    <li>亏损后摊平加仓</li>
+                    <li>没有退出时间的裸买 Call / Put</li>
+                    <li>用个股期权表达宏观风险</li>
+                    <li>把保险费当成盈利本金</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="glass priority rounded-3xl p-8 md:p-10 mb-8">
+            <h2 class="text-2xl font-black text-emerald-300 mb-6">优先</h2>
+            <div class="grid md:grid-cols-5 gap-4 text-center">
+                <div class="rule-card rounded-2xl p-5">先降仓<br><span class="text-gray-500 text-sm">再对冲</span></div>
+                <div class="rule-card rounded-2xl p-5">先用指数<br><span class="text-gray-500 text-sm">不用个股</span></div>
+                <div class="rule-card rounded-2xl p-5">先用价差<br><span class="text-gray-500 text-sm">不裸买</span></div>
+                <div class="rule-card rounded-2xl p-5">先定亏损<br><span class="text-gray-500 text-sm">再谈收益</span></div>
+                <div class="rule-card rounded-2xl p-5">先有规则<br><span class="text-gray-500 text-sm">再有交易</span></div>
+            </div>
+        </section>
+
+        <section class="rounded-3xl p-8 md:p-10 border border-red-500/30 bg-red-950/20 shadow-2xl shadow-red-950/30">
+            <h2 class="text-2xl font-black text-red-200 mb-6">最终提醒</h2>
+            <div class="space-y-5 text-xl md:text-2xl font-black leading-relaxed">
+                <p>如果只是“我觉得会跌”，不准买 Put。</p>
+                <p>如果不能接受归零，不准下单。</p>
+                <p>如果没有写清退出条件，不准交易。</p>
+                <p class="pt-4 text-amber-200">期权是工具，不是战场。</p>
+            </div>
+        </section>
+
+        <footer class="mt-16 text-center">
+            <a href="../index.html" class="inline-flex items-center gap-2 text-gray-600 hover:text-white transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6"/></svg>
+                返回指挥中心
+            </a>
+        </footer>
+    </main>
+</body>
+</html>
